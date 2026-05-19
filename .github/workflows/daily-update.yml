@@ -1,0 +1,64 @@
+name: Daily Prediction Update
+
+on:
+  schedule:
+    # 22:00 UTC = 07:00 KST (한국 시간 매일 오전 7시)
+    - cron: '0 22 * * *'
+  workflow_dispatch: # 수동 실행 버튼
+
+permissions:
+  contents: write   # 자동 commit 권한
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "daily-update"
+  cancel-in-progress: false
+
+jobs:
+  predict-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install numpy pandas matplotlib requests
+
+      - name: Install Korean font (NanumGothic)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-nanum
+          # matplotlib 폰트 캐시 클리어
+          rm -rf ~/.cache/matplotlib
+
+      - name: Run prediction (KST date)
+        env:
+          # GitHub runner 는 UTC. KST = UTC+9
+          TZ: Asia/Seoul
+        run: |
+          export PREDICT_AS_OF=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          echo "KST date: $PREDICT_AS_OF"
+          python scripts/predict.py
+
+      - name: Commit updated predictions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/data/ web/plots/ data/processed/predictions.json data/processed/history/ data/processed/history_timeline.json data/processed/plots/ || true
+          if git diff --staged --quiet; then
+            echo "변경사항 없음 — 커밋 스킵"
+          else
+            KST=$(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M KST')
+            git commit -m "chore: daily prediction update ($KST)"
+            git push
+          fi

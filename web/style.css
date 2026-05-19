@@ -1,0 +1,533 @@
+/* ============================================================
+   부산 북구갑 보궐선거 예측 — 다크 대시보드
+   ============================================================ */
+
+:root {
+  --bg: #0b0f1a;
+  --bg-soft: #121829;
+  --bg-card: #161e33;
+  --bg-card-hover: #1a2440;
+  --border: #243054;
+  --text: #e7ecf5;
+  --text-dim: #8d97b3;
+  --text-faint: #5a6584;
+  --accent: #6ea8ff;
+
+  /* 후보 컬러 — 정당 톤 */
+  --c-ha: #2f6fdb;       /* 민주 블루 */
+  --c-ha-soft: #2f6fdb22;
+  --c-han: #b5bdcc;      /* 무소속 그레이 */
+  --c-han-soft: #b5bdcc22;
+  --c-park: #e74c5e;     /* 국힘 레드 */
+  --c-park-soft: #e74c5e22;
+
+  --risk-yellow: #f0b429;
+  --risk-red: #e74c5e;
+
+  --shadow: 0 2px 12px rgba(0,0,0,0.35);
+  --shadow-lift: 0 8px 28px rgba(0,0,0,0.45);
+  --radius: 14px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', sans-serif;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(47, 111, 219, 0.22), transparent 60%),
+    radial-gradient(900px 500px at 100% 10%, rgba(231, 76, 94, 0.10), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(16px);
+  background: rgba(11, 15, 26, 0.78);
+  border-bottom: 1px solid var(--border);
+}
+.topbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo { font-size: 28px; }
+.brand-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+.brand-sub { font-size: 12px; color: var(--text-dim); }
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
+}
+.dot.live {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18); }
+  50% { box-shadow: 0 0 0 7px rgba(74, 222, 128, 0.0); }
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+.section { margin-top: 56px; }
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 6px;
+}
+.section-sub {
+  margin: 0 0 22px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero { margin-top: 32px; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+}
+@media (max-width: 760px) {
+  .hero-grid { grid-template-columns: 1fr; }
+}
+
+.countdown-card {
+  background: linear-gradient(160deg, #1b2547 0%, #11182b 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.countdown-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.countdown-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 88px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 8px 0 4px;
+  background: linear-gradient(180deg, #ffffff 0%, #94a3c2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.countdown-unit { color: var(--text-dim); font-size: 15px; }
+.election-date {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.headline-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.headline-tag {
+  display: inline-block;
+  background: var(--c-ha-soft);
+  color: var(--c-ha);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  align-self: flex-start;
+  margin-bottom: 12px;
+}
+.headline-lead {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+.headline-lead .lead-name { color: var(--c-ha); }
+.headline-lead .lead-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 800;
+}
+.headline-margin {
+  margin-top: 10px;
+  color: var(--text-dim);
+  font-size: 14px;
+}
+.headline-caveat {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--risk-yellow);
+  font-size: 13px;
+}
+
+/* ============================================================
+   CANDIDATE CARDS
+   ============================================================ */
+.candidate-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .candidate-grid { grid-template-columns: 1fr; }
+}
+.candidate-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.candidate-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: #334065;
+}
+.candidate-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--card-color, var(--text-dim));
+}
+.candidate-card.leading { box-shadow: 0 0 0 1px var(--card-color, var(--accent)) inset, var(--shadow-lift); }
+
+.cand-row { display: flex; justify-content: space-between; align-items: baseline; }
+.cand-name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.cand-party {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.cand-pct-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.cand-pct {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--card-color, var(--text));
+}
+.cand-pct-label {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+.cand-bar {
+  margin-top: 18px;
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cand-bar-fill {
+  height: 100%;
+  background: var(--card-color);
+  border-radius: 999px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cand-foot {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.cand-foot strong { color: var(--text); font-weight: 600; }
+
+/* ============================================================
+   CHART CARDS
+   ============================================================ */
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.chart-card canvas {
+  width: 100% !important;
+  max-height: 380px;
+}
+
+/* ============================================================
+   SCENARIO NOTES
+   ============================================================ */
+.scenario-notes {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.scenario-notes li {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--c-ha);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.scenario-notes li strong { color: var(--text); }
+
+/* ============================================================
+   METHODOLOGY
+   ============================================================ */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .method-grid { grid-template-columns: 1fr; }
+}
+.method-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+.method-step {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(110, 168, 255, 0.10);
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+.method-card h3 {
+  margin: 12px 0 8px;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+.method-card p {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin: 0 0 14px;
+}
+.method-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.num-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 8px;
+  color: var(--text);
+}
+
+/* ============================================================
+   ASSUMPTION TABLE
+   ============================================================ */
+.assumption-table {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.assump-row {
+  display: grid;
+  grid-template-columns: 2.4fr 1fr 0.7fr;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  align-items: center;
+}
+.assump-row:last-child { border-bottom: none; }
+.assump-row.header {
+  background: rgba(255,255,255,0.03);
+  color: var(--text-dim);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.risk {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.risk.yellow { background: rgba(240, 180, 41, 0.15); color: var(--risk-yellow); }
+.risk.red { background: rgba(231, 76, 94, 0.15); color: var(--risk-red); }
+
+/* ============================================================
+   CONTEXT
+   ============================================================ */
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .context-grid { grid-template-columns: 1fr; }
+}
+.context-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+.context-card h3 {
+  font-size: 16px;
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
+.context-card p {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin: 0;
+}
+.context-card strong { color: var(--text); font-weight: 600; }
+
+/* ============================================================
+   PLOT GRID
+   ============================================================ */
+.plot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .plot-grid { grid-template-columns: 1fr; }
+}
+.plot-grid figure {
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  overflow: hidden;
+}
+.plot-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background: white;
+}
+.plot-grid figcaption {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+  margin-top: 80px;
+}
+.footer-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+@media (max-width: 760px) {
+  .footer-inner { grid-template-columns: 1fr; }
+}
+.footer-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.footer-col ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.footer-col li { padding: 4px 0; }
+.footer-col p { font-size: 13px; color: var(--text-dim); margin: 0; }
+.footer-bottom {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 24px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}

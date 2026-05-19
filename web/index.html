@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부산 북구갑 보궐선거 예측 · 2026-06-03</title>
+  <meta name="description" content="2026년 6월 3일 부산 북구갑 국회의원 보궐선거 예측 — 베이지안 + Monte Carlo 모델, 매일 자동 업데이트" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="logo">🗳️</span>
+        <div>
+          <div class="brand-title">부산 북구갑 보궐선거 예측</div>
+          <div class="brand-sub">2026년 6월 3일 · 베이지안 + Monte Carlo 모델</div>
+        </div>
+      </div>
+      <div class="status">
+        <span class="dot live"></span>
+        <span id="updated-at">로딩 중…</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO: Days countdown + headline -->
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="countdown-card">
+          <div class="countdown-label">선거일까지</div>
+          <div class="countdown-number" id="days-until">--</div>
+          <div class="countdown-unit">일 남음</div>
+          <div class="election-date">투표일 · <strong>2026년 6월 3일 (수)</strong></div>
+        </div>
+        <div class="headline-card">
+          <div class="headline-tag">현재 베이스라인 (3자 구도)</div>
+          <div class="headline-lead" id="lead-line">로딩 중…</div>
+          <div class="headline-margin" id="margin-line"></div>
+          <div class="headline-caveat">⚠ 95%는 모델 가정이며 보수 단일화·돌발 변수에 따라 크게 흔들립니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CANDIDATES: Win probability cards -->
+    <section class="section">
+      <h2 class="section-title">후보별 당선 확률</h2>
+      <p class="section-sub">10,000회 Monte Carlo 시뮬레이션 기준</p>
+      <div class="candidate-grid" id="candidate-grid"></div>
+    </section>
+
+    <!-- VOTE SHARE: Distribution chart -->
+    <section class="section">
+      <h2 class="section-title">예상 득표율 분포</h2>
+      <p class="section-sub">사후 Dirichlet에서 1만번 샘플링 · 가는 막대는 90% 신뢰구간, 굵은 점은 중앙값</p>
+      <div class="chart-card">
+        <canvas id="voteShareChart"></canvas>
+      </div>
+    </section>
+
+    <!-- SCENARIOS -->
+    <section class="section">
+      <h2 class="section-title">시나리오별 당선 확률</h2>
+      <p class="section-sub">현재 3자 구도가 다른 방향으로 바뀔 때의 시뮬레이션</p>
+      <div class="chart-card">
+        <canvas id="scenarioChart"></canvas>
+      </div>
+      <ul class="scenario-notes">
+        <li><strong>보수단일화는 후보가 누구냐가 핵심</strong> — 한동훈 단일화: 압승 · 박민식 단일화: 패배</li>
+        <li><strong>한동훈 +15% 모멘텀</strong>이 있으면 충분히 역전 가능, 16일 변동성 큼</li>
+        <li><strong>박민식 사퇴 → 한동훈으로 보수 결집</strong>이 하정우의 최대 위협</li>
+      </ul>
+    </section>
+
+    <!-- HISTORY: Trend over time -->
+    <section class="section">
+      <h2 class="section-title">예측 변화 추이</h2>
+      <p class="section-sub">매일 자동 재계산 · 시간이 지나면 추세선이 채워집니다</p>
+      <div class="chart-card">
+        <canvas id="historyChart"></canvas>
+      </div>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section class="section methodology">
+      <h2 class="section-title">방법론</h2>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-step">STEP 1 · 사전분포</div>
+          <h3>과거 선거로 추정한 기준선</h3>
+          <p>북구갑 최근 3회 총선(2016/2020/2024)을 가중평균(0.5, 0.3, 0.2)하여 진보·보수 베이스 추정. 보궐선거 보정 -2%p(투표율 하락에 따른 진보 불리). 보수 베이스를 한동훈 65% / 박민식 35%로 분할.</p>
+          <div class="method-numbers" id="prior-numbers"></div>
+        </div>
+        <div class="method-card">
+          <div class="method-step">STEP 2 · 우도</div>
+          <h3>최신 여론조사</h3>
+          <p>가장 최근 유효 여론조사를 자동 선택. 부동층은 후보별 흡수 가정(하정우 35% / 한동훈 40% / 박민식 25%)으로 배분.</p>
+          <div class="method-numbers" id="poll-numbers"></div>
+        </div>
+        <div class="method-card">
+          <div class="method-step">STEP 3 · 사후분포</div>
+          <h3>베이지안 업데이트</h3>
+          <p>Dirichlet-Multinomial 결합. 사전 강도 = 200 (5회 선거 ≈ 가상 표본 200명). 여론조사를 가상 다항분포 관측치로 변환하여 alpha 합산.</p>
+          <div class="method-numbers" id="posterior-numbers"></div>
+        </div>
+        <div class="method-card">
+          <div class="method-step">STEP 4 · Monte Carlo</div>
+          <h3>10,000회 시뮬레이션</h3>
+          <p>사후 Dirichlet에서 10,000번 샘플링하고 각 회마다 argmax = 당선자. 시나리오 분석은 alpha 조정 후 동일 절차 반복.</p>
+          <div class="method-numbers"><span class="num-pill">N = 10,000</span><span class="num-pill">3-way</span><span class="num-pill">argmax</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSUMPTIONS / RISK -->
+    <section class="section">
+      <h2 class="section-title">핵심 가정과 위험도</h2>
+      <p class="section-sub">아래 가정 중 하나라도 크게 틀리면 결과가 달라집니다</p>
+      <div class="assumption-table">
+        <div class="assump-row header">
+          <div>가정</div><div>설정</div><div>위험도</div>
+        </div>
+        <div class="assump-row">
+          <div>부동층(10.7%) 중 한동훈이 40% 흡수</div><div>중립적 배분</div><div><span class="risk yellow">중간</span></div>
+        </div>
+        <div class="assump-row">
+          <div>보수 베이스 65%가 한동훈으로</div><div>여론조사 반영</div><div><span class="risk yellow">중간</span></div>
+        </div>
+        <div class="assump-row">
+          <div>여론조사 1회(부산MBC) 신뢰</div><div>단일 폴 의존</div><div><span class="risk red">높음</span></div>
+        </div>
+        <div class="assump-row">
+          <div>보궐 투표율 하락 → 진보 -2%p</div><div>과거 패턴 적용</div><div><span class="risk yellow">중간</span></div>
+        </div>
+        <div class="assump-row">
+          <div>박민식 지지층이 한동훈으로 이동 안함</div><div>현 구도 유지</div><div><span class="risk red">높음</span></div>
+        </div>
+        <div class="assump-row">
+          <div>사전 강도 200 (모델 confidence)</div><div>중간 수준</div><div><span class="risk yellow">중간</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTEXT -->
+    <section class="section context">
+      <h2 class="section-title">선거 배경</h2>
+      <div class="context-grid">
+        <div class="context-card">
+          <h3>왜 보궐선거인가</h3>
+          <p>21대 의원 전재수(민주)가 2026년 부산광역시장 출마를 위해 2026-04-30 의원직 사퇴. 그 빈자리를 채우는 보궐선거가 같은 날(6월 3일) 진행되는 부산시장 선거와 동시에 치러집니다.</p>
+        </div>
+        <div class="context-card">
+          <h3>3자 구도</h3>
+          <p><strong>하정우</strong>(더불어민주당) vs <strong>박민식</strong>(국민의힘) vs <strong>한동훈</strong>(무소속). 한동훈의 무소속 출마로 인한 <strong>보수 분열</strong>이 이번 선거의 결정적 변수.</p>
+        </div>
+        <div class="context-card">
+          <h3>북구갑은 어떤 지역구</h3>
+          <p>보수 우세 부산에서 민주당이 3연승(2016/2020/2024)한 거의 유일한 지역구. 단, 대선/지방선거에서는 보수가 더 잘 나옴 → <strong>선거 종류별 갭이 큰 변동성 있는 곳</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLOTS -->
+    <section class="section">
+      <h2 class="section-title">상세 시각화</h2>
+      <p class="section-sub">Monte Carlo 분포 · 역대 추세 · 시나리오</p>
+      <div class="plot-grid">
+        <figure><img src="plots/01_vote_share_distribution.png" alt="후보별 득표율 사후분포" /><figcaption>1만회 Monte Carlo 사후분포</figcaption></figure>
+        <figure><img src="plots/02_win_probability.png" alt="베이스라인 당선 확률" /><figcaption>베이스라인 당선 확률</figcaption></figure>
+        <figure><img src="plots/03_scenarios.png" alt="시나리오별 당선 확률" /><figcaption>시나리오별 당선 확률</figcaption></figure>
+        <figure><img src="plots/04_historical_trend.png" alt="역대 선거 추세" /><figcaption>역대 선거 추세 (총선 = 원, 대선 = 사각형)</figcaption></figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div class="footer-title">데이터 출처</div>
+        <ul>
+          <li>중앙선거관리위원회 — info.nec.go.kr</li>
+          <li>부산MBC-한길리서치 (2026-05-05, n=584)</li>
+          <li>위키백과 — 부산광역시 역대 선거</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">모델</div>
+        <ul>
+          <li>Dirichlet-Multinomial 베이지안</li>
+          <li>Monte Carlo (N=10,000)</li>
+          <li>매일 07:00 KST 자동 재계산</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">고지</div>
+        <p>예측은 확률이며 결과를 보장하지 않습니다. 가정(보수 단일화, 부동층 배분, 폴 신뢰도)에 따라 결과가 크게 변동될 수 있습니다.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-asof">—</span>
+      <span>· built with Claude + Dirichlet posterior</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
