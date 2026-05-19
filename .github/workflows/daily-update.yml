@@ -1,10 +1,12 @@
-name: Daily Prediction Update
+name: Daily Update & Deploy
 
 on:
   schedule:
     # 22:00 UTC = 07:00 KST (한국 시간 매일 오전 7시)
     - cron: '0 22 * * *'
-  workflow_dispatch: # 수동 실행 버튼
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write   # 자동 commit 권한
@@ -12,11 +14,13 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "daily-update"
+  group: "pages"
   cancel-in-progress: false
 
 jobs:
-  predict-and-commit:
+  predict:
+    # cron 또는 수동 실행 시에만 예측 재계산. 일반 push 에서는 스킵.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,12 +42,10 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq fonts-nanum
-          # matplotlib 폰트 캐시 클리어
           rm -rf ~/.cache/matplotlib
 
       - name: Run prediction (KST date)
         env:
-          # GitHub runner 는 UTC. KST = UTC+9
           TZ: Asia/Seoul
         run: |
           export PREDICT_AS_OF=$(TZ=Asia/Seoul date +%Y-%m-%d)
@@ -62,3 +64,29 @@ jobs:
             git commit -m "chore: daily prediction update ($KST)"
             git push
           fi
+
+  deploy:
+    # predict 가 끝났거나 (그래서 새 커밋이 push 됐거나), 단순 push 가 들어왔을 때 배포
+    needs: predict
+    if: always() && (needs.predict.result == 'success' || needs.predict.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout (latest, including bot commit)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload web/ artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
