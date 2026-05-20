@@ -1,0 +1,13 @@
+{
+  "name": "PPUKU 뿌꾸 — 부산 북구갑 보궐선거 예측",
+  "short_name": "PPUKU 뿌꾸",
+  "description": "AI 선거 분석 예측 · 부산 북구갑",
+  "icons": [
+    { "src": "/favicon/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0b0f1a",
+  "background_color": "#0b0f1a",
+  "display": "standalone",
+  "start_url": "/"
+}
