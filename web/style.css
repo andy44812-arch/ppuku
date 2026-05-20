@@ -485,6 +485,200 @@ main {
 }
 
 /* ============================================================
+   POLLS COMPARISON
+   ============================================================ */
+.poll-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 760px) {
+  .poll-grid { grid-template-columns: 1fr; }
+}
+.poll-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  position: relative;
+}
+.poll-card.hilite {
+  border-color: var(--c-han);
+  box-shadow: 0 0 0 1px var(--c-han) inset, 0 8px 24px rgba(181,189,204,0.08);
+}
+.poll-card.current {
+  border-color: var(--accent);
+}
+.poll-head { margin-bottom: 12px; }
+.poll-source {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.poll-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.pill-now {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(110,168,255,0.15);
+  color: var(--accent);
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+}
+.poll-row {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+  border-top: 1px dashed var(--border);
+}
+.poll-row.hl {
+  background: rgba(181,189,204,0.06);
+  border-radius: 8px;
+  padding: 8px 8px;
+  margin: 4px -8px;
+  border-top: none;
+}
+.poll-mode {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.poll-mode.hl-label { color: var(--c-han); }
+.poll-bars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pb {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid transparent;
+}
+.pb.ha { background: var(--c-ha-soft); color: var(--c-ha); }
+.pb.han { background: var(--c-han-soft); color: var(--c-han); }
+.pb.park { background: var(--c-park-soft); color: var(--c-park); }
+.pb.win {
+  border-color: currentColor;
+  font-weight: 700;
+  box-shadow: 0 0 0 2px rgba(181,189,204,0.18);
+}
+.poll-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--c-han);
+  background: rgba(181,189,204,0.08);
+  padding: 8px 12px;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+.poll-note strong { color: #fff; }
+
+.poll-channela {
+  margin-top: 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+}
+.ca-tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.poll-channela p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.poll-channela strong { color: var(--text); font-weight: 600; }
+
+/* ============================================================
+   SOURCES SECTION
+   ============================================================ */
+.sources .src-group {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.src-title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.src-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.src-list li {
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14px;
+}
+.src-list li:last-child { border-bottom: none; }
+.src-list a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.src-list a:hover { border-bottom-color: var(--accent); }
+.src-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.src-tag.hl {
+  color: var(--c-han);
+  border-color: var(--c-han);
+  background: rgba(181,189,204,0.10);
+  font-weight: 600;
+}
+.src-tag.now {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(110,168,255,0.08);
+}
+.src-list.compact li {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 footer {
