@@ -16,10 +16,3 @@ poll_date,pollster,sample_size,response_rate_pct,election,candidate,party,suppor
 2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,42.9,head-to-head 한동훈 vs 하정우
 2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,26.3,head-to-head 박민식 vs 하정우
 2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.6,head-to-head 박민식 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,39.0,3-way race
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,한동훈,무소속,33.0,3-way race
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,박민식,국민의힘,20.0,3-way race
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_A,한동훈,무소속,39.0,head-to-head 한동훈 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.0,head-to-head 한동훈 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,30.0,head-to-head 박민식 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.0,head-to-head 박민식 vs 하정우
