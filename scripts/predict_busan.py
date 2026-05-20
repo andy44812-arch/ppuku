@@ -40,11 +40,11 @@ rcParams["axes.unicode_minus"] = False
 # 경로
 # ============================================================
 ROOT = Path(__file__).resolve().parent.parent
-DATA = ROOT / "data" / "raw"
-OUT = ROOT / "data" / "processed"
+DATA = ROOT / "data" / "raw" / "busan"
+OUT = ROOT / "data" / "processed" / "busan"
 PLOTS = OUT / "plots"
 HISTORY = OUT / "history"
-WEB_DATA = ROOT / "web" / "data"
+WEB_DATA = ROOT / "web" / "data" / "busan"
 WEB_HISTORY = WEB_DATA / "history"
 PLOTS.mkdir(parents=True, exist_ok=True)
 HISTORY.mkdir(parents=True, exist_ok=True)
@@ -93,7 +93,7 @@ print(f"  prior_alpha: {dict(zip(CANDIDATES, prior_alpha.round(2)))}")
 # ============================================================
 # 2. 여론조사 로드 + House Effects + Fieldwork Midpoint Weighting
 # ============================================================
-polls_df = pd.read_csv(DATA / "current_polls_2026.csv")
+polls_df = pd.read_csv(DATA / "current_polls_busan.csv")
 threeway = polls_df[polls_df["election"] == "2026_buksu_gap_byelection"].copy()
 threeway["sample_size_num"] = pd.to_numeric(threeway["sample_size"], errors="coerce")
 threeway = threeway.dropna(subset=["sample_size_num"]).copy()
@@ -536,7 +536,7 @@ ax.set_ylabel("득표율 (%)"); ax.set_xlabel("연도")
 ax.set_title("역대 추세 (원=총선, 사각형=대선[북구 전체])"); ax.legend(); ax.grid(alpha=0.3)
 plt.tight_layout(); plt.savefig(PLOTS / "04_historical_trend.png", dpi=120); plt.close()
 
-WEB_PLOTS = ROOT / "web" / "plots"
+WEB_PLOTS = ROOT / "web" / "plots" / "busan"
 WEB_PLOTS.mkdir(parents=True, exist_ok=True)
 for p in PLOTS.glob("*.png"):
     shutil.copy2(p, WEB_PLOTS / p.name)

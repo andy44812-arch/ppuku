@@ -44,19 +44,20 @@ jobs:
           sudo apt-get install -y -qq fonts-nanum
           rm -rf ~/.cache/matplotlib
 
-      - name: Run prediction (KST date)
+      - name: Run prediction (KST date) — 부산 + 서울
         env:
           TZ: Asia/Seoul
         run: |
           export PREDICT_AS_OF=$(TZ=Asia/Seoul date +%Y-%m-%d)
           echo "KST date: $PREDICT_AS_OF"
-          python scripts/predict.py
+          python scripts/predict_busan.py
+          python scripts/predict_seoul.py
 
       - name: Commit updated predictions
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/data/ web/plots/ data/processed/predictions.json data/processed/history/ data/processed/history_timeline.json data/processed/plots/ || true
+          git add web/data/ web/plots/ data/processed/busan/ data/processed/seoul/ || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 스킵"
           else

@@ -5,8 +5,10 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PORT="${PORT:-8765}"
 
-echo "📊 부산 북구갑 보궐선거 예측 대시보드"
-echo "   ➜  http://localhost:$PORT"
+echo "📊 PPUKU 뿌꾸 — 2026 선거 예측 대시보드"
+echo "   ➜  랜딩    : http://localhost:$PORT"
+echo "   ➜  서울시장 : http://localhost:$PORT/seoul.html"
+echo "   ➜  부산 북구갑: http://localhost:$PORT/busan.html"
 echo "   (종료: Ctrl+C)"
 echo ""
 

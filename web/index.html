@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>부산 북구갑 보궐선거 예측 · 2026-06-03</title>
-  <meta name="description" content="2026년 6월 3일 부산 북구갑 국회의원 보궐선거 예측 — 매일 자동 업데이트" />
+  <title>PPUKU 뿌꾸 — 2026 선거 예측 (서울시장 · 부산 북구갑)</title>
+  <meta name="description" content="2026년 6월 3일 서울특별시장 선거 / 부산 북구갑 보궐선거 예측 — 매일 자동 업데이트" />
 
-  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32.png" />
@@ -16,9 +15,8 @@
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#0b0f1a" />
 
-  <!-- Open Graph / social -->
-  <meta property="og:title" content="PPUKU 뿌꾸 — 부산 북구갑 보궐선거 예측" />
-  <meta property="og:description" content="2026-06-03 부산 북구갑 보궐선거 · 베이지안 + Monte Carlo AI 예측" />
+  <meta property="og:title" content="PPUKU 뿌꾸 — 2026 선거 예측" />
+  <meta property="og:description" content="2026-06-03 서울시장 · 부산 북구갑 보궐선거 · 베이지안 + Monte Carlo AI 예측" />
   <meta property="og:image" content="/favicon/og-image.png" />
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -27,546 +25,120 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
-<body>
+<body class="landing">
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
         <img class="logo" src="/favicon/favicon-192.png" alt="PPUKU 뿌꾸" width="40" height="40" />
         <div>
-          <div class="brand-title">부산 북구갑 보궐선거 예측</div>
-          <div class="brand-sub">2026년 6월 3일 · 매일 자동 업데이트</div>
+          <div class="brand-title">PPUKU 뿌꾸</div>
+          <div class="brand-sub">2026 선거 예측 · 매일 자동 업데이트</div>
         </div>
       </div>
       <div class="status">
         <span class="dot live"></span>
-        <span id="updated-at">로딩 중…</span>
+        <span>2026.06.03 D-<span id="dday-num">--</span></span>
       </div>
     </div>
   </header>
 
-  <!-- TABS -->
-  <nav class="tabs">
-    <div class="tabs-inner">
-      <button class="tab-btn active" data-tab="summary">📊 요약</button>
-      <button class="tab-btn" data-tab="details">📈 예측 상세</button>
-      <button class="tab-btn" data-tab="scenarios">🔀 시나리오</button>
-      <button class="tab-btn" data-tab="polls">📋 여론조사</button>
-      <button class="tab-btn" data-tab="method">📚 방법론·배경</button>
-    </div>
-  </nav>
-
-  <main>
-    <!-- ==================== TAB: 요약 ==================== -->
-    <section class="tab-panel active" id="tab-summary">
-      <!-- HERO -->
-      <div class="hero">
-        <div class="hero-grid">
-          <div class="countdown-card">
-            <div class="countdown-label">선거일까지</div>
-            <div class="countdown-number" id="days-until">--</div>
-            <div class="countdown-unit">일 남음</div>
-            <div class="election-date">투표일 · <strong>2026년 6월 3일 (수)</strong></div>
-          </div>
-          <div class="headline-card">
-            <div class="headline-tag">현재 베이스라인 (3자 구도)</div>
-            <div class="headline-lead" id="lead-line">로딩 중…</div>
-            <div class="headline-margin" id="margin-line"></div>
-            <div class="headline-caveat">⚠ 이 숫자는 컴퓨터 모델이 추정한 값입니다. 보수 단일화나 돌발 변수가 생기면 크게 달라질 수 있어요.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 후보 카드 -->
-      <div class="section">
-        <h2 class="section-title">후보별 당선 확률</h2>
-        <p class="section-sub">컴퓨터로 1만 번의 가상 선거를 돌려 본 결과 — 그 중 몇 번 당선되었는지의 비율</p>
-        <div class="candidate-grid" id="candidate-grid"></div>
-      </div>
-
-      <!-- 짧은 한 줄 안내 -->
-      <div class="section quick-explain">
-        <div class="quick-card">
-          <h3>💡 이 사이트는 뭘 보여주나요?</h3>
-          <p>
-            과거 부산 북구갑 선거 결과 + 최근 여론조사 12건 + 부산 특유의 "샤이 보수" 효과를 합쳐,
-            컴퓨터가 <strong>"오늘 시점에서 누가 당선될 확률이 얼마인지"</strong>를 매일 새로 계산해 보여줍니다.
-            어려운 용어나 자세한 계산이 궁금하면 위쪽의 <strong>📚 방법론·배경</strong> 탭을 눌러주세요.
-          </p>
-        </div>
-      </div>
-
-      <!-- 샤이 보수 -->
-      <div class="section shy">
-        <h2 class="section-title">샤이 보수 (Shy Conservative) 추정</h2>
-        <p class="section-sub">
-          여론조사에는 "보수 뽑겠다"고 답하기 꺼리는 사람이 있어, 실제 득표가 조사보다 보수 쪽으로 더 나오는 경향이에요.
-          이 모델은 부산 과거 선거들을 보고 그 차이를 보정해 줍니다.
-        </p>
-
-        <div class="shy-grid">
-          <div class="shy-big-card">
-            <div class="shy-label">현재 모델 추정치</div>
-            <div class="shy-number" id="shy-number">+4.0%p</div>
-            <div class="shy-sub">한동훈 +2.0%p · 박민식 +2.0%p (50:50 분배)</div>
-            <div class="shy-confidence">신뢰도: <strong id="shy-confidence">중간</strong> · 3개 과거 부산 선거 기반</div>
-          </div>
-
-          <div class="shy-method-card">
-            <h3 class="shy-h3">📊 산출 근거 (부산 지역 폴 vs 실제득표 격차)</h3>
-            <ul class="shy-evidence">
-              <li><span class="shy-year">2022 대선 부산</span> 폴 평균 보수 ~53% → 실제 윤석열 58.3% <span class="shy-delta">+5.3%p</span></li>
-              <li><span class="shy-year">2024 총선 부산 평균</span> 폴 보수 ~44% → 실제 47% <span class="shy-delta">+3.0%p</span></li>
-              <li><span class="shy-year">2021 부산시장 보궐</span> 폴 박형준 53–58% → 실제 62.7% <span class="shy-delta">+5~10%p</span></li>
-            </ul>
-            <div class="shy-formula">⇒ 가중 평균 <strong>약 +4%p</strong> (보수적 추정, 보궐선거 효과 고려)</div>
-          </div>
-
-          <div class="shy-impact-card">
-            <h3 class="shy-h3">⚡ 모델 영향 (보정 전 → 후)</h3>
-            <table class="shy-table" id="shy-impact-table">
-              <thead>
-                <tr><th>후보</th><th class="r">샤이 미적용</th><th class="r">샤이 적용</th><th class="r">Δ</th></tr>
-              </thead>
-              <tbody><!-- populated by app.js --></tbody>
-            </table>
-            <div class="shy-note">샤이 보수 보정이 한동훈 당선 확률을 결정적으로 좌우합니다.</div>
-          </div>
-        </div>
-      </div>
+  <main class="landing-main">
+    <section class="landing-hero">
+      <h1 class="landing-h1">어느 선거를 보러 오셨나요?</h1>
+      <p class="landing-sub">
+        같은 방식(베이지안 + 1만 회 몬테카를로 시뮬레이션)으로
+        <strong>매일 새로 계산</strong>되는 두 선거의 예측을 제공합니다.
+      </p>
     </section>
 
-    <!-- ==================== TAB: 예측 상세 ==================== -->
-    <section class="tab-panel" id="tab-details">
-      <div class="section">
-        <h2 class="section-title">예상 득표율 분포</h2>
-        <p class="section-sub">
-          각 후보가 받을 득표율의 "가능한 범위". 가운데 점은 가장 가능성 높은 값,
-          가는 막대는 90% 확률로 그 사이에 들어오는 범위예요.
-        </p>
-        <div class="chart-card">
-          <canvas id="voteShareChart"></canvas>
+    <section class="landing-grid">
+      <!-- 서울시장 -->
+      <a class="race-card race-seoul" href="seoul.html">
+        <div class="race-card-tag">🏙️ 서울특별시</div>
+        <div class="race-card-title">서울특별시장 선거</div>
+        <div class="race-card-sub">2026년 6월 3일 · 제9회 전국동시지방선거</div>
+        <div class="race-card-vs">
+          <div class="vs-cand">
+            <img src="images/seoul/정원오.webp" alt="정원오" />
+            <div class="vs-name">정원오</div>
+            <div class="vs-party" style="color:#2f6fdb">더불어민주당</div>
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="vs-cand">
+            <img src="images/seoul/오세훈.webp" alt="오세훈" />
+            <div class="vs-name">오세훈</div>
+            <div class="vs-party" style="color:#e74c5e">국민의힘</div>
+          </div>
         </div>
-      </div>
+        <div class="race-card-cta">예측 보기 →</div>
+      </a>
 
-      <div class="section">
-        <h2 class="section-title">예측 변화 추이</h2>
-        <p class="section-sub">매일 새로 계산한 당선 확률을 시간순으로 본 그래프 — 시간이 지나면 추세선이 채워집니다</p>
-        <div class="chart-card">
-          <canvas id="historyChart"></canvas>
+      <!-- 부산 북구갑 -->
+      <a class="race-card race-busan" href="busan.html">
+        <div class="race-card-tag">🏖️ 부산 북구갑</div>
+        <div class="race-card-title">부산 북구갑 보궐선거</div>
+        <div class="race-card-sub">2026년 6월 3일 · 국회의원 보궐</div>
+        <div class="race-card-vs vs-three">
+          <div class="vs-cand">
+            <img src="images/busan/하정우.webp" alt="하정우" />
+            <div class="vs-name">하정우</div>
+            <div class="vs-party" style="color:#2f6fdb">민주</div>
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="vs-cand">
+            <img src="images/busan/한동훈.webp" alt="한동훈" />
+            <div class="vs-name">한동훈</div>
+            <div class="vs-party" style="color:#b5bdcc">무소속</div>
+          </div>
+          <div class="vs-divider">vs</div>
+          <div class="vs-cand">
+            <img src="images/busan/박민식.webp" alt="박민식" />
+            <div class="vs-name">박민식</div>
+            <div class="vs-party" style="color:#e74c5e">국힘</div>
+          </div>
         </div>
-      </div>
+        <div class="race-card-cta">예측 보기 →</div>
+      </a>
     </section>
 
-    <!-- ==================== TAB: 시나리오 ==================== -->
-    <section class="tab-panel" id="tab-scenarios">
-      <div class="section">
-        <h2 class="section-title">시나리오별 당선 확률</h2>
-        <p class="section-sub">"만약 ~ 한다면" 식의 가상 상황에서 당선 확률이 어떻게 바뀌는지 비교</p>
-        <div class="chart-card">
-          <canvas id="scenarioChart"></canvas>
-        </div>
-        <ul class="scenario-notes">
-          <li><strong>보수단일화는 후보가 누구냐가 핵심</strong> — 한동훈 단일화: 압승 · 박민식 단일화: 패배</li>
-          <li><strong>한동훈 +15% 모멘텀</strong>이 있으면 충분히 역전 가능, 16일 변동성 큼</li>
-          <li><strong>박민식 사퇴 → 한동훈으로 보수 결집</strong>이 하정우의 최대 위협</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ==================== TAB: 여론조사 ==================== -->
-    <section class="tab-panel" id="tab-polls">
-      <div class="section polls">
-        <h2 class="section-title">여론조사 12건 (3자대결, 매체별 lean 표시)</h2>
-        <p class="section-sub">
-          매체마다 정치 성향이 달라서 결과가 조금씩 치우칠 수 있어요. 색깔로 매체 성향을 표시했고,
-          최근에 조사된 것부터 보여줍니다. ⭐ = 한동훈 1위 또는 오차범위 내 박빙
-        </p>
-        <div class="poll-legend">
-          <span class="lean-badge lean-right">우파</span>
-          <span class="lean-badge lean-center">중도</span>
-          <span class="lean-badge lean-centerleft">중도좌</span>
-          <span class="lean-badge lean-left">좌파</span>
-        </div>
-        <div id="polls-grid" class="poll-grid-compact"><!-- populated by app.js --></div>
-      </div>
-    </section>
-
-    <!-- ==================== TAB: 방법론·배경 ==================== -->
-    <section class="tab-panel" id="tab-method">
-      <!-- 쉬운 용어 사전 -->
-      <div class="section">
-        <h2 class="section-title">먼저, 어려운 용어부터 풀어볼게요</h2>
-        <p class="section-sub">이 사이트에 나오는 통계 용어들을 일상 언어로 풀어 쓴 미니 사전</p>
-        <div class="glossary">
-          <div class="glossary-item">
-            <div class="glossary-term">📊 여론조사 (폴, Poll)</div>
-            <div class="glossary-def">
-              유권자 수백 명에게 "누구 뽑을 거예요?"라고 물어본 결과예요.
-              <strong>"지금 분위기"</strong>를 알려주지만, 응답자가 500명이면 오차범위가 ±4%p 정도라
-              한 번의 조사만으로 결과를 단정할 수는 없어요. 그래서 이 모델은 12건을 합쳐서 봅니다.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">🎲 몬테카를로 시뮬레이션 (Monte Carlo)</div>
-            <div class="glossary-def">
-              컴퓨터로 <strong>"가상의 선거를 1만 번 돌려 보는 것"</strong>이에요.
-              매번 약간씩 다른 결과가 나오는데, 그 중 A 후보가 5,500번 1등을 하면
-              "A 후보 당선 확률 55%"라고 부르는 식이죠. 동전을 1만 번 던져 앞면 비율을
-              세는 것과 같은 원리예요.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">🧮 디리클레-다항분포 (Dirichlet-Multinomial)</div>
-            <div class="glossary-def">
-              이름이 무섭게 생겼지만,
-              <strong>"여러 후보가 동시에 경쟁할 때 각자의 득표율을 동시에 다루는 통계 모델"</strong> 정도로 이해하면 충분해요.
-              후보가 2명이면 동전던지기로 충분하지만, 3명 이상이면 이 모델을 써야 "세 사람 득표율 합 = 100%"가 자연스럽게 맞춰져요.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">🔄 베이지안 업데이트 (Bayesian)</div>
-            <div class="glossary-def">
-              <strong>"과거 경험 + 새 정보 = 더 나은 판단"</strong>을 수학적으로 한 방식이에요.
-              <em>과거 선거 결과(사전분포)</em>를 출발점으로 잡고,
-              <em>최근 여론조사(우도)</em>를 더해서 <em>최종 예측(사후분포)</em>을 만들어요.
-              새 여론조사가 들어올수록 예측이 점점 정교해집니다.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">🙊 샤이 보수 (Shy Conservative)</div>
-            <div class="glossary-def">
-              여론조사 전화에 "보수 뽑겠다"고 답하기 꺼리는 사람들 때문에 실제 득표가
-              조사보다 보수 쪽으로 더 나오는 현상이에요. 부산은 과거에 이 격차가 평균 <strong>+4%p</strong> 정도였어서,
-              모델이 이 값만큼 한동훈·박민식 쪽에 보너스를 더해 줍니다.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">📰 House Effects (매체 lean 보정)</div>
-            <div class="glossary-def">
-              여론조사 기관마다 결과가 살짝 한쪽으로 치우치는 경향이 있어요.
-              우파 성향 매체는 보수 후보를, 좌파 성향 매체는 진보 후보를 평균보다 살짝 높게 잡는 식이죠.
-              이 모델은 매체의 정치 성향을 보고 <strong>±1.5%p 정도 보정</strong>해서 평균에 가깝게 끌어옵니다.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">📐 신뢰구간 (90% CI)</div>
-            <div class="glossary-def">
-              "득표율이 <strong>90% 확률로 이 구간 안에 들어올 거예요</strong>"라는 범위예요.
-              모델이 정확한 한 점을 찍을 수는 없으니, 대신 "이 정도 폭의 가능성"으로 보여주는 거죠.
-              구간이 좁을수록 자신 있는 예측, 넓을수록 불확실한 예측.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">🌬️ 선거일 드리프트 (Drift)</div>
-            <div class="glossary-def">
-              선거일까지 남은 기간 동안 <strong>여론이 자연스럽게 흔들릴 가능성</strong>을 반영한 거예요.
-              지금이 선거일에서 멀수록 변동성이 커요. 모델은 1만 번 시뮬레이션을 할 때마다
-              "혹시 마지막에 ±4.5%p 흔들린다면?" 같은 변화를 함께 굴려봅니다.
-            </div>
-          </div>
-          <div class="glossary-item">
-            <div class="glossary-term">🤷 부동층</div>
-            <div class="glossary-def">
-              아직 누구를 뽑을지 정하지 않은 사람들이에요.
-              모델은 "이 사람들이 결국 어떻게 갈라설지"를 가정해서 후보별로 나눠 줍니다
-              (하정우 30% · 한동훈 40% · 박민식 30%). 이 가정이 틀어지면 결과가 바뀝니다.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 방법론 -->
-      <div class="section methodology">
-        <h2 class="section-title">예측은 이렇게 만들어져요 (6단계)</h2>
-        <p class="section-sub">매일 자동으로 돌아가는 계산 파이프라인 — Nate Silver 538 방식 + 부산 지역 보정</p>
-        <div class="method-grid method-grid-3">
-          <div class="method-card">
-            <div class="method-step">1단계 · 과거에서 출발</div>
-            <h3>"이 동네는 원래 어떤 성향?"</h3>
-            <p>북구갑 최근 3번 총선(2016/2020/2024)을 평균. 최근일수록 가중치 ↑.
-            보궐선거는 진보 쪽 투표율이 살짝 낮은 경향이라 -2%p 보정. 보수 표는
-            <strong>한동훈 65 : 박민식 35</strong>로 나눕니다.</p>
-            <div class="method-numbers" id="prior-numbers"></div>
-          </div>
-
-          <div class="method-card">
-            <div class="method-step">2단계 · 매체별 편향 보정</div>
-            <h3>"이 매체는 좀 치우치지 않나?"</h3>
-            <p>여론조사 기관마다 결과가 살짝 한쪽으로 치우치는 경향(<strong>house effects</strong>)이 있어요.
-            우파 매체는 보수 후보를 평균보다 1.5%p 더 잡고, 좌파 매체는 진보 후보를 1.5%p 더 잡는 식.
-            그 알려진 양만큼 빼서 평준화합니다.</p>
-            <div class="method-numbers">
-              <span class="num-pill lean-right">우파 ±1.5%p</span>
-              <span class="num-pill lean-centerleft">중도좌 ±0.5%p</span>
-              <span class="num-pill lean-left">좌파 ±1.5%p</span>
-            </div>
-          </div>
-
-          <div class="method-card">
-            <div class="method-step">3단계 · 최근 여론조사 가중평균</div>
-            <h3>"최근 폴들을 합치자"</h3>
-            <p>최근 21일 폴을 모두 가중평균. <strong>최근 조사일수록</strong>(반감기 7일) +
-            <strong>응답자가 많은 조사일수록</strong>(√n) 비중을 더 줍니다. 아직 마음 못 정한 부동층은
-            하/한/박 = 30:40:30으로 배분.</p>
-            <div class="method-numbers" id="poll-numbers"></div>
-          </div>
-
-          <div class="method-card">
-            <div class="method-step">4단계 · 샤이 보수 보정</div>
-            <h3>"전화에 안 잡히는 표 +4%p"</h3>
-            <p>부산은 과거에 여론조사보다 실제 보수 득표가 평균 <strong>+4%p 정도 더 나왔어요</strong>
-            (2022 대선 +5.3, 2024 총선 +3, 2021 시장보궐 +5~10%p). 그 평균을
-            한동훈/박민식 50:50으로 나눠 더해 줍니다.</p>
-            <div class="method-numbers">
-              <span class="num-pill shy-pill">+4.0%p</span>
-              <span class="num-pill">한 +2.0</span>
-              <span class="num-pill">박 +2.0</span>
-            </div>
-          </div>
-
-          <div class="method-card">
-            <div class="method-step">5단계 · 과거 + 현재 합치기</div>
-            <h3>"종합 예측 만들기"</h3>
-            <p>1~4단계를 통계적으로 합쳐 새 예측을 만듭니다. 단, "여론조사가 진짜 그만큼 정확하진 않다"는 점을 반영해
-            <strong>표본을 1/7로 할인</strong>(design effect = 7). 비표본오차·매체 편향까지 고려한 안전장치예요.</p>
-            <div class="method-numbers" id="posterior-numbers"></div>
-          </div>
-
-          <div class="method-card">
-            <div class="method-step">6단계 · 1만 번 가상 선거</div>
-            <h3>"확률로 환산"</h3>
-            <p>5단계 예측에서 1만 번 결과를 뽑아 봅니다. 각 시뮬레이션엔 "선거일까지 분위기가 흔들릴 수 있는 정도"
-            (±4.5%p, 한·박은 반대 방향 상관)도 더해요. 그 중 A 후보가 5,500번 이기면 "A 당선 확률 55%".</p>
-            <div class="method-numbers"><span class="num-pill">N = 10,000회</span><span class="num-pill">σ = 4.5%p</span><span class="num-pill">ρ(한,박) = −0.5</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 가정 -->
-      <div class="section">
-        <h2 class="section-title">핵심 가정과 위험도</h2>
-        <p class="section-sub">아래 가정 중 하나라도 크게 틀리면 결과가 달라집니다</p>
-        <div class="assumption-table">
-          <div class="assump-row header">
-            <div>가정</div><div>설정</div><div>위험도</div>
-          </div>
-          <div class="assump-row">
-            <div>최근 21일 폴 12건, 조사일·표본크기로 가중평균</div><div>538 스타일</div><div><span class="risk green">낮음</span></div>
-          </div>
-          <div class="assump-row">
-            <div>매체별 편향(House effects): 우파 ±1.5%p, 좌파 ±1.5%p</div><div>알려진 lean 보정</div><div><span class="risk yellow">중간</span></div>
-          </div>
-          <div class="assump-row">
-            <div>샤이 보수 +4.0%p (한 +2 / 박 +2 분배)</div><div>부산 과거 3선거 평균</div><div><span class="risk yellow">중간</span></div>
-          </div>
-          <div class="assump-row">
-            <div>부동층 배분: 하 30 / 한 40 / 박 30</div><div>중도+인지도 가중</div><div><span class="risk yellow">중간</span></div>
-          </div>
-          <div class="assump-row">
-            <div>여론조사 표본 1/7로 할인 (design effect = 7)</div><div>업계 표준 +α</div><div><span class="risk yellow">중간</span></div>
-          </div>
-          <div class="assump-row">
-            <div>선거일까지 분위기 흔들림(드리프트): σ = 4.5%p (14일 기준)</div><div>보수 후보 간 ρ = −0.5</div><div><span class="risk yellow">중간</span></div>
-          </div>
-          <div class="assump-row">
-            <div>보수 베이스 65%가 한동훈으로 (사전분포)</div><div>여론조사 반영</div><div><span class="risk yellow">중간</span></div>
-          </div>
-          <div class="assump-row">
-            <div>박민식 지지층이 한동훈으로 이동 안함</div><div>현 구도 유지</div><div><span class="risk red">높음</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 배경 -->
-      <div class="section context">
-        <h2 class="section-title">선거 배경</h2>
-        <div class="context-grid">
-          <div class="context-card">
-            <h3>왜 보궐선거인가</h3>
-            <p>21대 의원 전재수(민주)가 2026년 부산광역시장 출마를 위해 2026-04-30 의원직 사퇴. 그 빈자리를 채우는 보궐선거가 같은 날(6월 3일) 진행되는 부산시장 선거와 동시에 치러집니다.</p>
-          </div>
-          <div class="context-card">
-            <h3>3자 구도</h3>
-            <p><strong>하정우</strong>(더불어민주당) vs <strong>박민식</strong>(국민의힘) vs <strong>한동훈</strong>(무소속). 한동훈의 무소속 출마로 인한 <strong>보수 분열</strong>이 이번 선거의 결정적 변수.</p>
-          </div>
-          <div class="context-card">
-            <h3>북구갑은 어떤 지역구</h3>
-            <p>보수 우세 부산에서 민주당이 3연승(2016/2020/2024)한 거의 유일한 지역구. 단, 대선/지방선거에서는 보수가 더 잘 나옴 → <strong>선거 종류별 갭이 큰 변동성 있는 곳</strong>.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 정적 시각화 -->
-      <div class="section">
-        <h2 class="section-title">상세 시각화 (정적 이미지)</h2>
-        <p class="section-sub">매일 자동 생성되는 PNG 차트 — 위쪽 인터랙티브 차트와 같은 데이터 기반</p>
-        <div class="plot-grid">
-          <figure><img src="plots/01_vote_share_distribution.png" alt="후보별 득표율 사후분포" /><figcaption>1만회 가상 선거 득표율 분포</figcaption></figure>
-          <figure><img src="plots/02_win_probability.png" alt="베이스라인 당선 확률" /><figcaption>베이스라인 당선 확률</figcaption></figure>
-          <figure><img src="plots/03_scenarios.png" alt="시나리오별 당선 확률" /><figcaption>시나리오별 당선 확률</figcaption></figure>
-          <figure><img src="plots/04_historical_trend.png" alt="역대 선거 추세" /><figcaption>역대 선거 추세 (총선 = 원, 대선 = 사각형)</figcaption></figure>
-        </div>
-      </div>
-
-      <!-- 출처 -->
-      <section class="section sources">
-        <h2 class="section-title">출처 모음 (Sources)</h2>
-        <p class="section-sub">본 페이지에서 인용한 모든 자료의 원문 링크</p>
-
-        <div class="src-group">
-          <h3 class="src-title">📊 여론조사 12건 (날짜순)</h3>
-          <ul class="src-list">
-            <li>
-              <a href="https://www.sisajournal.com/news/articleView.html?idxno=373468" target="_blank" rel="noopener">뉴스토마토 · 미디어토마토 (4/24–25, n=802)</a>
-              <span class="src-tag lean-left">좌파</span>
-              <span class="src-tag">하 35.5 · 한 28.5 · 박 26.0</span>
-            </li>
-            <li>
-              <a href="https://busanmbc.co.kr/01_new/new01_view.asp?idx=285019" target="_blank" rel="noopener">부산MBC · 한길리서치 1차 (5/1–3, n=584)</a>
-              <span class="src-tag lean-centerleft">중도좌</span>
-              <span class="src-tag hl">★ 양자 한 38.2 ▶ 하 37.4</span>
-            </li>
-            <li>
-              <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1008547251" target="_blank" rel="noopener">SBS · 입소스 (5/1–3, n=503)</a>
-              <span class="src-tag lean-center">중도</span>
-              <span class="src-tag">하 38 · 박 26 · 한 21</span>
-            </li>
-            <li>
-              <a href="https://m.news.nate.com/view/20260507n30008" target="_blank" rel="noopener">JTBC · 메타보이스 (5/4–5, n=501)</a>
-              <span class="src-tag lean-centerleft">중도좌</span>
-              <span class="src-tag">하 37 · 박 26 · 한 25</span>
-            </li>
-            <li>
-              <a href="https://www.khan.co.kr/article/202605112005001" target="_blank" rel="noopener">KBS부산 · 한국리서치 (5/8–10, n=500)</a>
-              <span class="src-tag lean-centerleft">중도좌</span>
-              <span class="src-tag">하 37 · 한 30 · 박 17</span>
-            </li>
-            <li>
-              <a href="https://www.dt.co.kr/article/12062327" target="_blank" rel="noopener">국제신문 · 리얼미터 (5/9–10, n=506)</a>
-              <span class="src-tag lean-center">중도</span>
-              <span class="src-tag">하 43.4 · 한 28.1 · 박 23.1</span>
-            </li>
-            <li>
-              <a href="https://www.dt.co.kr/article/12062498" target="_blank" rel="noopener">부산MBC · 한길리서치 2차 (5/11–12, n=501)</a>
-              <span class="src-tag lean-centerleft">중도좌</span>
-              <span class="src-tag">하 35.5 · 한 32.6 · 박 25.5</span>
-            </li>
-            <li>
-              <a href="https://www.news1.kr/politics/assembly/6165971" target="_blank" rel="noopener">뉴스1 · 한국갤럽 (5/12–13, n=508)</a>
-              <span class="src-tag lean-center">중도</span>
-              <span class="src-tag">하 39 · 한 29 · 박 21</span>
-            </li>
-            <li>
-              <a href="https://www.busan.com/view/busan/view.php?code=2026051814314611967" target="_blank" rel="noopener">여론조사꽃 (5/14–15, n=502)</a>
-              <span class="src-tag lean-left">좌파</span>
-              <span class="src-tag">하 41.7 · 한 32.2 · 박 21.1</span>
-            </li>
-            <li>
-              <a href="https://www.dt.co.kr/article/12063204" target="_blank" rel="noopener">조선일보 · 메트릭스 (5/16–17, n=501)</a>
-              <span class="src-tag lean-right">우파</span>
-              <span class="src-tag">하 39 · 한 33 · 박 20</span>
-            </li>
-            <li>
-              <a href="https://imnews.imbc.com/replay/2026/nwdesk/article/6823775_37004.html" target="_blank" rel="noopener">MBC · 코리아리서치 (5/16–18, n=500)</a>
-              <span class="src-tag lean-centerleft">중도좌</span>
-              <span class="src-tag">하 38 · 한 33 · 박 20</span>
-            </li>
-            <li>
-              <a href="https://www.fnnews.com/news/202605200500325435" target="_blank" rel="noopener">뉴시스 · 에이스리서치 (5/17–18, n=504)</a>
-              <span class="src-tag lean-center">중도</span>
-              <span class="src-tag">하 40.4 · 한 32.7 · 박 20.9</span>
-            </li>
-            <li>
-              <a href="https://www.edaily.co.kr/News/Read?newsId=05261126645450888&amp;mediaCodeNo=257" target="_blank" rel="noopener">채널A · 리서치앤리서치 (5/17–19, n=500)</a>
-              <span class="src-tag lean-right">우파</span>
-              <span class="src-tag hl">★ 한 34.6 ▶ 하 32.9 · 박 20.5 (한동훈 유일 1위)</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="src-group">
-          <h3 class="src-title">📺 방송 · 영상</h3>
-          <ul class="src-list">
-            <li>
-              <a href="https://www.youtube.com/watch?v=e0RbQAIIkWU" target="_blank" rel="noopener">채널A 「김진의 돌직구쇼」 — 부산북갑 여론 엎치락뒤치락</a>
-              <span class="src-tag">KBS부산·한국리서치 결과 인용</span>
-            </li>
-            <li>
-              <a href="https://imnews.imbc.com/news/2026/politics/article/6820310_36911.html" target="_blank" rel="noopener">MBC — '전 국민의힘 대표' vs '무소속' 여론조사의 비밀</a>
-            </li>
-            <li>
-              <a href="https://imnews.imbc.com/replay/2026/nwdesk/article/6822557_37004.html" target="_blank" rel="noopener">MBC — 부산 북구갑 최대 변수 '단일화'</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="src-group">
-          <h3 class="src-title">📰 보도 · 분석</h3>
-          <ul class="src-list">
-            <li><a href="https://www.pressian.com/pages/articles/2026051918361464525" target="_blank" rel="noopener">프레시안 — 한동훈 "단일화, 민심이 길 내줘" vs 박민식 "1%도 없다"</a></li>
-            <li><a href="https://weekly.khan.co.kr/article/202605051732001/" target="_blank" rel="noopener">주간경향 — 갈수록 치열해지는 부산: 전재수 vs 박형준, 하정우 vs 한동훈</a></li>
-            <li><a href="https://www.ohmynews.com/NWS_Web/Series/series_premium_pg.aspx?CNTN_CD=A0003231660" target="_blank" rel="noopener">오마이뉴스 — 하루 만에 뒤집혔다고? 북구갑 여론조사 대해부</a></li>
-            <li><a href="https://www.ohmynews.com/NWS_Web/Series/series_premium_pg.aspx?CNTN_CD=A0003233903" target="_blank" rel="noopener">오마이뉴스 — '국힘 타이틀' 2번 등장한 여론조사, 한동훈 약진 맞아?</a></li>
-            <li><a href="https://news.nate.com/view/20260512n32150" target="_blank" rel="noopener">네이트뉴스 — 부산 북갑 '한동훈 스타일' 통했나… 보수층 심장부 '요동'</a></li>
-            <li><a href="https://www.dt.co.kr/article/12063294" target="_blank" rel="noopener">디지털타임스 — 하정우 어부지리냐, 한동훈 극적 역전이냐</a></li>
-            <li><a href="https://mobile.busan.com/view/busan/view.php?code=2026050507280140973" target="_blank" rel="noopener">부산일보 — 부산MBC-한길리서치 결과 보도 (5/5)</a></li>
-          </ul>
-        </div>
-
-        <div class="src-group">
-          <h3 class="src-title">🏛️ 1차 자료 (선거 · 인구 통계)</h3>
-          <ul class="src-list">
-            <li><a href="https://info.nec.go.kr/" target="_blank" rel="noopener">중앙선거관리위원회 — 선거통계시스템</a><span class="src-tag">역대 개표 결과</span></li>
-            <li><a href="http://data.nec.go.kr/" target="_blank" rel="noopener">NEC 국가선거정보 개방포털</a></li>
-            <li><a href="https://www.data.go.kr/data/15000864/openapi.do" target="_blank" rel="noopener">공공데이터포털 — 당선인 정보 OpenAPI</a></li>
-            <li><a href="https://jumin.mois.go.kr/ageStatMonth.do" target="_blank" rel="noopener">행정안전부 — 주민등록 인구통계 (동별 연령)</a></li>
-            <li><a href="https://www.bsbukgu.go.kr/" target="_blank" rel="noopener">부산광역시 북구청 통계</a></li>
-          </ul>
-        </div>
-
-        <div class="src-group">
-          <h3 class="src-title">📚 위키 (2차 자료, 데이터 수집 사용)</h3>
-          <ul class="src-list compact">
-            <li>위키백과 — 부산광역시 22대 / 21대 / 20대 총선</li>
-            <li>위키백과 — 19대 / 20대 / 21대 대선 (부산광역시)</li>
-            <li>위키백과 — 제7회·제8회 전국동시지방선거 (부산광역시)</li>
-            <li>위키백과 — 부산 북구의 국회의원</li>
-          </ul>
-        </div>
-      </section>
+    <section class="landing-method">
+      <h2>두 선거 모두 같은 방법으로 예측합니다</h2>
+      <ul class="method-bullets">
+        <li><strong>📊 베이지안 모델</strong> — 과거 선거 결과(사전분포) + 최근 여론조사(우도)를 합쳐 사후분포 산출</li>
+        <li><strong>🎲 1만 번 가상 선거</strong> — Dirichlet-Multinomial + 선거일 드리프트 σ=4.5%p (14일 기준)</li>
+        <li><strong>📰 House Effects 보정</strong> — 매체 lean(우파/중도/좌파)별 알려진 편향 ±1.5%p 차감</li>
+        <li><strong>🙊 샤이 보수 보정</strong> — 부산 +4%p · 서울 +1.5%p (지역별 과거 격차에 맞춤)</li>
+        <li><strong>🕒 매일 07:00 KST</strong> 자동 재계산 · 모든 가정·출처 공개</li>
+      </ul>
     </section>
   </main>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-col">
-        <div class="footer-title">데이터 출처</div>
-        <ul>
-          <li>여론조사 12건 · 방송 · 언론 보도 · NEC · 행안부</li>
-          <li>자세한 출처: 📚 방법론·배경 탭 하단 「출처 모음」</li>
-        </ul>
-      </div>
-      <div class="footer-col">
         <div class="footer-title">모델</div>
         <ul>
-          <li>베이지안 (과거 + 여론조사 결합)</li>
-          <li>1만 번 가상 선거 시뮬레이션</li>
-          <li>매일 07:00 KST 자동 재계산</li>
+          <li>Nate Silver 538-style 베이지안 + Monte Carlo</li>
+          <li>각 페이지 「📚 방법론·배경」 탭에서 상세 확인</li>
         </ul>
       </div>
       <div class="footer-col">
         <div class="footer-title">고지</div>
-        <p>예측은 확률이며 결과를 보장하지 않습니다. 가정(보수 단일화, 부동층 배분, 폴 신뢰도)에 따라 결과가 크게 변동될 수 있습니다.</p>
+        <p>예측은 확률이며 결과를 보장하지 않습니다. 모든 가정과 데이터는 각 선거 페이지에서 공개합니다.</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span id="footer-asof">—</span>
-      <span>· built with Claude</span>
+      <span>PPUKU 뿌꾸 · built with Claude</span>
     </div>
   </footer>
 
-  <script src="app.js"></script>
+  <script>
+    // D-Day 표시
+    const electionDay = new Date("2026-06-03T00:00:00+09:00");
+    const today = new Date();
+    const dday = Math.max(0, Math.ceil((electionDay - today) / 86400000));
+    document.getElementById("dday-num").textContent = dday;
+  </script>
 </body>
 </html>

@@ -1,10 +1,9 @@
 // ============================================================
-// 부산 북구갑 보궐선거 예측 — 클라이언트 렌더링
+// 서울특별시장 선거 예측 — 클라이언트 렌더링 (2자대결)
 // ============================================================
 const CANDIDATE_META = {
-  "하정우":  { party: "더불어민주당", color: "#2f6fdb", short: "민주",   photo: "images/하정우.webp" },
-  "한동훈":  { party: "무소속",       color: "#b5bdcc", short: "무소속", photo: "images/한동훈.webp" },
-  "박민식":  { party: "국민의힘",     color: "#e74c5e", short: "국힘",   photo: "images/박민식.webp" },
+  "정원오": { party: "더불어민주당", color: "#2f6fdb", short: "민주", photo: "images/seoul/정원오.webp" },
+  "오세훈": { party: "국민의힘",     color: "#e74c5e", short: "국힘", photo: "images/seoul/오세훈.webp" },
 };
 
 const fmt = {
@@ -117,7 +116,6 @@ function renderVoteShareChart(pred) {
   const p95Data = candidates.map(c => pred.vote_share_percentiles[c].p95 * 100);
   const colors = candidates.map(c => CANDIDATE_META[c].color);
 
-  // floating bar from p5 → p95, point at p50 (mean)
   const barData = candidates.map((c, i) => [p5Data[i], p95Data[i]]);
 
   const ctx = document.getElementById("voteShareChart");
@@ -134,7 +132,7 @@ function renderVoteShareChart(pred) {
           borderWidth: 2,
           borderRadius: 8,
           borderSkipped: false,
-          maxBarThickness: 90,
+          maxBarThickness: 110,
         },
         {
           label: "중앙값",
@@ -173,7 +171,7 @@ function renderVoteShareChart(pred) {
       scales: {
         y: {
           beginAtZero: true,
-          max: 55,
+          max: 65,
           ticks: { color: CHART_DEFAULTS.tickColor, callback: (v) => `${v}%` },
           grid: { color: CHART_DEFAULTS.grid },
         },
@@ -190,13 +188,12 @@ function renderScenarioChart(pred) {
   const scenarios = pred.scenarios;
   const candidates = pred.candidates;
 
-  // Order: baseline first
   const order = [
-    "BASELINE (3자대결 현황)",
-    "보수단일화 (한동훈)",
-    "보수단일화 (박민식)",
-    "한동훈 모멘텀",
-    "민주 결집",
+    "BASELINE (2자대결 현황)",
+    "보수 결집 (현직 효과)",
+    "진보 결집 (정부 지원)",
+    "오세훈 모멘텀",
+    "정원오 모멘텀",
   ].filter(n => n in scenarios);
 
   const datasets = candidates.map(c => ({
@@ -204,7 +201,7 @@ function renderScenarioChart(pred) {
     data: order.map(s => (scenarios[s].win_prob[c] || 0) * 100),
     backgroundColor: CANDIDATE_META[c].color,
     borderRadius: 6,
-    maxBarThickness: 38,
+    maxBarThickness: 44,
   }));
 
   const labels = order.map(n => n.replace("BASELINE (", "").replace(")", ""));
@@ -246,10 +243,7 @@ function renderScenarioChart(pred) {
 
 function renderHistoryChart(timeline) {
   const ctx = document.getElementById("historyChart");
-
-  if (!timeline || timeline.length === 0) {
-    return;
-  }
+  if (!timeline || timeline.length === 0) return;
 
   const candidates = Object.keys(timeline[0].win_probability);
   const labels = timeline.map(d => d.date);
@@ -266,7 +260,6 @@ function renderHistoryChart(timeline) {
     fill: false,
   }));
 
-  // If only one data point, show a friendly message overlay using a plugin
   const onlyOne = timeline.length === 1;
 
   new Chart(ctx, {
@@ -315,7 +308,6 @@ function renderMethodNumbers(pred) {
   document.getElementById("prior-numbers").innerHTML = `
     <span class="num-pill">진보 ${(prior.prior_progressive * 100).toFixed(1)}%</span>
     <span class="num-pill">보수 ${(prior.prior_conservative * 100).toFixed(1)}%</span>
-    <span class="num-pill">한동훈/박민식 ${(prior["conservative_split_HAN/PARK"][0] * 100).toFixed(0)}/${(prior["conservative_split_HAN/PARK"][1] * 100).toFixed(0)}</span>
     <span class="num-pill">강도 ${prior.prior_strength}</span>
   `;
   const poll = pred.poll;
@@ -374,20 +366,20 @@ function renderPolls(pred) {
   const wrap = document.getElementById("polls-grid");
   if (!wrap || !pred.poll || !pred.poll.polls_used) return;
   wrap.innerHTML = "";
-  // Sort by weight desc (most influential first)
   const polls = [...pred.poll.polls_used].sort((a, b) => b.weight - a.weight);
   for (const p of polls) {
-    const han = p.support["한동훈"] * 100;
-    const ha = p.support["하정우"] * 100;
-    const park = p.support["박민식"] * 100;
-    const hanLead = han > ha;
-    const close = Math.abs(han - ha) < 3;
-    const star = hanLead ? "⭐ 한동훈 1위" : close ? "⚡ 박빙" : "";
+    const jung = p.support["정원오"] * 100;
+    const ose = p.support["오세훈"] * 100;
+    const diff = Math.abs(jung - ose);
+    const close = diff < 4;  // 오차범위(~3.5%p) 내
+    const star = close ? "⚡ 오차범위 내 박빙" : "";
     const fwStart = p.fieldwork_start.slice(5).replace("-", "/");
     const fwEnd = p.fieldwork_end.slice(5).replace("-", "/");
     const fwDisplay = fwStart === fwEnd ? fwStart : `${fwStart}–${fwEnd}`;
     const leanLabel = LEAN_LABEL[p.lean] || p.lean;
-    const cardClass = hanLead ? "poll-card-c hilite" : "poll-card-c";
+    const cardClass = close ? "poll-card-c hilite" : "poll-card-c";
+    const jungClass = jung > ose ? "pb ha lead" : "pb ha";
+    const oseClass = ose > jung ? "pb park lead" : "pb park";
     wrap.innerHTML += `
       <div class="${cardClass}">
         <div class="pc-head">
@@ -399,9 +391,8 @@ function renderPolls(pred) {
           <span class="pc-weight" title="모델 가중치">w=${p.weight.toFixed(2)}</span>
         </div>
         <div class="pc-bars">
-          ${ha >= han && ha >= park ? `<span class="pb ha lead">하 ${ha.toFixed(1)}</span>` : `<span class="pb ha">하 ${ha.toFixed(1)}</span>`}
-          ${han > ha ? `<span class="pb han lead">한 ${han.toFixed(1)}</span>` : `<span class="pb han">한 ${han.toFixed(1)}</span>`}
-          <span class="pb park">박 ${park.toFixed(1)}</span>
+          <span class="${jungClass}">정 ${jung.toFixed(1)}</span>
+          <span class="${oseClass}">오 ${ose.toFixed(1)}</span>
         </div>
         ${star ? `<div class="pc-flag">${star}</div>` : ""}
       </div>
@@ -409,8 +400,6 @@ function renderPolls(pred) {
   }
 }
 
-// Tabs: render charts lazily on first activation so they aren't sized to 0
-// while their panel is display:none.
 const TAB_RENDERERS = {};
 const TAB_RENDERED  = new Set();
 
@@ -441,20 +430,16 @@ async function init() {
   bindTabs();
   try {
     const [pred, timeline] = await Promise.all([
-      loadJSON("data/predictions.json"),
-      loadJSON("data/history_timeline.json").catch(() => []),
+      loadJSON("data/seoul/predictions.json"),
+      loadJSON("data/seoul/history_timeline.json").catch(() => []),
     ]);
 
-    // Summary tab (always visible at load)
     renderUpdated(pred);
     renderHeadline(pred);
     renderCandidates(pred);
     renderShyConservative(pred);
-
-    // Methodology tab content that isn't a chart (numbers/pills) — safe to render now
     renderMethodNumbers(pred);
 
-    // Charts: defer until their tab is opened (canvas needs nonzero width)
     TAB_RENDERERS.details   = () => { renderVoteShareChart(pred); renderHistoryChart(timeline); };
     TAB_RENDERERS.scenarios = () => { renderScenarioChart(pred); };
     TAB_RENDERERS.polls     = () => { renderPolls(pred); };

@@ -1,0 +1,367 @@
+{
+  "model": "Nate Silver 538-style: House effects + Fieldwork midpoint + 샤이보수 + Dirichlet + drift (2-way)",
+  "election": "2026-06-03 서울특별시장 선거 (제9회 전국동시지방선거)",
+  "election_date": "2026-06-03",
+  "as_of": "2026-05-20",
+  "days_until_election": 14,
+  "candidates": [
+    "정원오",
+    "오세훈"
+  ],
+  "prior": {
+    "method": "서울 2022지선(0.30) · 2021보궐(0.20) · 2018지선(0.10) · 2022대선(0.15) · 2025대선(0.25) 가중평균",
+    "prior_progressive": 0.440985,
+    "prior_conservative": 0.503985,
+    "conservative_split_HAN/PARK": [
+      1.0,
+      0.0
+    ],
+    "prior_strength": 100,
+    "prior_alpha": {
+      "정원오": 46.666560843201374,
+      "오세훈": 53.333439156798626
+    }
+  },
+  "house_effects": {
+    "applied": true,
+    "values_pct": {
+      "right": {
+        "정원오": 1.5,
+        "오세훈": -1.5
+      },
+      "centerleft": {
+        "정원오": -1.0,
+        "오세훈": 1.0
+      },
+      "left": {
+        "정원오": -1.5,
+        "오세훈": 1.5
+      },
+      "center": {
+        "정원오": 0.0,
+        "오세훈": 0.0
+      }
+    },
+    "description": "매체 lean별 알려진 편향(%p)을 raw 지지율에서 차감"
+  },
+  "poll": {
+    "method": "최근 21일 폴 9건, fieldwork midpoint 기준 recency × √n 가중평균",
+    "n_polls": 9,
+    "n_total_raw": 7412,
+    "n_effective": 1058.9,
+    "design_effect": 7.0,
+    "halflife_days": 7,
+    "support_raw": {
+      "정원오": 0.44117614465099875,
+      "오세훈": 0.35957587321173634
+    },
+    "support_house_effect_adjusted": {
+      "정원오": 0.44101614455300914,
+      "오세훈": 0.3597358733097259
+    },
+    "support_shy_adjusted": {
+      "정원오": 0.4260161445530091,
+      "오세훈": 0.3747358733097259
+    },
+    "adjusted_final": {
+      "정원오": 0.5156777365147784,
+      "오세훈": 0.48432226348522167
+    },
+    "undecided_raw": 0.1992479821372649,
+    "undecided_after_shy": 0.19924798213726502,
+    "undecided_allocation": {
+      "정원오": 0.45,
+      "오세훈": 0.55
+    },
+    "polls_used": [
+      {
+        "pollster": "SBS-입소스",
+        "lean": "center",
+        "fieldwork_start": "2026-05-01",
+        "fieldwork_end": "2026-05-03",
+        "fw_midpoint": "2026-05-02",
+        "publication": "2026-05-05",
+        "n": 800,
+        "days_old": 18.0,
+        "weight": 0.168,
+        "support": {
+          "정원오": 0.41,
+          "오세훈": 0.34
+        },
+        "support_adjusted": {
+          "정원오": 0.41,
+          "오세훈": 0.34
+        }
+      },
+      {
+        "pollster": "스트레이트뉴스-조원씨앤아이",
+        "lean": "centerleft",
+        "fieldwork_start": "2026-05-04",
+        "fieldwork_end": "2026-05-05",
+        "fw_midpoint": "2026-05-04",
+        "publication": "2026-05-08",
+        "n": 802,
+        "days_old": 15.5,
+        "weight": 0.216,
+        "support": {
+          "정원오": 0.502,
+          "오세훈": 0.38
+        },
+        "support_adjusted": {
+          "정원오": 0.49200000000000005,
+          "오세훈": 0.39
+        }
+      },
+      {
+        "pollster": "JTBC-메타보이스",
+        "lean": "centerleft",
+        "fieldwork_start": "2026-05-11",
+        "fieldwork_end": "2026-05-12",
+        "fw_midpoint": "2026-05-11",
+        "publication": "2026-05-13",
+        "n": 804,
+        "days_old": 8.5,
+        "weight": 0.432,
+        "support": {
+          "정원오": 0.5,
+          "오세훈": 0.34
+        },
+        "support_adjusted": {
+          "정원오": 0.49,
+          "오세훈": 0.35
+        }
+      },
+      {
+        "pollster": "CBS-한국사회여론연구소",
+        "lean": "centerleft",
+        "fieldwork_start": "2026-05-12",
+        "fieldwork_end": "2026-05-13",
+        "fw_midpoint": "2026-05-12",
+        "publication": "2026-05-14",
+        "n": 1002,
+        "days_old": 7.5,
+        "weight": 0.533,
+        "support": {
+          "정원오": 0.449,
+          "오세훈": 0.39799999999999996
+        },
+        "support_adjusted": {
+          "정원오": 0.439,
+          "오세훈": 0.408
+        }
+      },
+      {
+        "pollster": "KBS-한국리서치",
+        "lean": "centerleft",
+        "fieldwork_start": "2026-05-11",
+        "fieldwork_end": "2026-05-14",
+        "fw_midpoint": "2026-05-12",
+        "publication": "2026-05-15",
+        "n": 800,
+        "days_old": 7.5,
+        "weight": 0.476,
+        "support": {
+          "정원오": 0.43,
+          "오세훈": 0.32
+        },
+        "support_adjusted": {
+          "정원오": 0.42,
+          "오세훈": 0.33
+        }
+      },
+      {
+        "pollster": "뉴스1-한국갤럽",
+        "lean": "center",
+        "fieldwork_start": "2026-05-09",
+        "fieldwork_end": "2026-05-10",
+        "fw_midpoint": "2026-05-09",
+        "publication": "2026-05-15",
+        "n": 802,
+        "days_old": 10.5,
+        "weight": 0.354,
+        "support": {
+          "정원오": 0.46,
+          "오세훈": 0.38
+        },
+        "support_adjusted": {
+          "정원오": 0.46,
+          "오세훈": 0.38
+        }
+      },
+      {
+        "pollster": "MBC-코리아리서치(2차)",
+        "lean": "centerleft",
+        "fieldwork_start": "2026-05-16",
+        "fieldwork_end": "2026-05-17",
+        "fw_midpoint": "2026-05-16",
+        "publication": "2026-05-18",
+        "n": 800,
+        "days_old": 3.5,
+        "weight": 0.707,
+        "support": {
+          "정원오": 0.43,
+          "오세훈": 0.35
+        },
+        "support_adjusted": {
+          "정원오": 0.42,
+          "오세훈": 0.36
+        }
+      },
+      {
+        "pollster": "조선일보-메트릭스",
+        "lean": "right",
+        "fieldwork_start": "2026-05-16",
+        "fieldwork_end": "2026-05-17",
+        "fw_midpoint": "2026-05-16",
+        "publication": "2026-05-19",
+        "n": 800,
+        "days_old": 3.5,
+        "weight": 0.707,
+        "support": {
+          "정원오": 0.4,
+          "오세훈": 0.37
+        },
+        "support_adjusted": {
+          "정원오": 0.415,
+          "오세훈": 0.355
+        }
+      },
+      {
+        "pollster": "채널A-리서치앤리서치",
+        "lean": "right",
+        "fieldwork_start": "2026-05-17",
+        "fieldwork_end": "2026-05-19",
+        "fw_midpoint": "2026-05-18",
+        "publication": "2026-05-20",
+        "n": 802,
+        "days_old": 2.0,
+        "weight": 0.821,
+        "support": {
+          "정원오": 0.439,
+          "오세훈": 0.35700000000000004
+        },
+        "support_adjusted": {
+          "정원오": 0.45399999999999996,
+          "오세훈": 0.342
+        }
+      }
+    ],
+    "source": "9건 평균",
+    "date": "2026-05-18",
+    "n": 1058,
+    "support": {
+      "정원오": 0.44117614465099875,
+      "오세훈": 0.35957587321173634
+    },
+    "undecided": 0.1992479821372649
+  },
+  "shy_conservative": {
+    "applied": true,
+    "magnitude_pct": 1.5,
+    "split": {
+      "오세훈": 1.0
+    },
+    "source": "서울 2022대선(+2.5%p)·2022지선(+1%p)·2021보궐(+1.5%p) 평균",
+    "confidence": "medium",
+    "notes": "서울 2022대선·2022지선·2021보궐 폴 vs 실제 결과 격차 평균"
+  },
+  "drift": {
+    "sigma_drift": 0.045,
+    "days_factor": 1.0,
+    "sigma_at_14d": 0.045,
+    "han_park_correlation": -1.0
+  },
+  "posterior_alpha": {
+    "정원오": 592.6956155642782,
+    "오세훈": 566.1615272928648
+  },
+  "posterior_mean": {
+    "정원오": 0.5114483862117785,
+    "오세훈": 0.4885516137882215
+  },
+  "win_probability": {
+    "정원오": 0.5845,
+    "오세훈": 0.4155
+  },
+  "vote_share_percentiles": {
+    "정원오": {
+      "p5": 0.4328004741248288,
+      "p50": 0.5101568986292325,
+      "p95": 0.5869224732645136
+    },
+    "오세훈": {
+      "p5": 0.4130775267354863,
+      "p50": 0.4898431013707675,
+      "p95": 0.5671995258751712
+    }
+  },
+  "margin": {
+    "median": 0.06470668780706335,
+    "p5": 0.005968552240224707,
+    "p95": 0.18623201851183319,
+    "P_close_race_within_1pp": 0.0832
+  },
+  "counterfactual_no_shy": {
+    "description": "샤이 보수 보정을 적용하지 않은 경우 비교 결과",
+    "posterior_mean": {
+      "정원오": 0.5251540075135537,
+      "오세훈": 0.4748459924864463
+    },
+    "win_probability": {
+      "정원오": 0.6997,
+      "오세훈": 0.3003
+    }
+  },
+  "scenarios": {
+    "보수 결집 (현직 효과)": {
+      "win_prob": {
+        "정원오": 0.0907,
+        "오세훈": 0.9093
+      },
+      "mean_share": {
+        "정원오": 0.4373518633586195,
+        "오세훈": 0.5626481366413831
+      }
+    },
+    "진보 결집 (정부 지원)": {
+      "win_prob": {
+        "정원오": 0.8964,
+        "오세훈": 0.1036
+      },
+      "mean_share": {
+        "정원오": 0.5591773539819159,
+        "오세훈": 0.44082264601808413
+      }
+    },
+    "오세훈 모멘텀": {
+      "win_prob": {
+        "정원오": 0.274,
+        "오세훈": 0.726
+      },
+      "mean_share": {
+        "정원오": 0.4713192139208424,
+        "오세훈": 0.5286807860791571
+      }
+    },
+    "정원오 모멘텀": {
+      "win_prob": {
+        "정원오": 0.8556,
+        "오세훈": 0.1444
+      },
+      "mean_share": {
+        "정원오": 0.5495265313567381,
+        "오세훈": 0.45047346864326143
+      }
+    },
+    "BASELINE (2자대결 현황)": {
+      "win_prob": {
+        "정원오": 0.5845,
+        "오세훈": 0.4155
+      },
+      "mean_share": {
+        "정원오": 0.5114483862117785,
+        "오세훈": 0.4885516137882215
+      }
+    }
+  }
+}
