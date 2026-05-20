@@ -2,9 +2,9 @@
 // 부산 북구갑 보궐선거 예측 — 클라이언트 렌더링
 // ============================================================
 const CANDIDATE_META = {
-  "하정우":  { party: "더불어민주당", color: "#2f6fdb", short: "민주" },
-  "한동훈":  { party: "무소속",       color: "#b5bdcc", short: "무소속" },
-  "박민식":  { party: "국민의힘",     color: "#e74c5e", short: "국힘" },
+  "하정우":  { party: "더불어민주당", color: "#2f6fdb", short: "민주",   photo: "images/하정우.webp" },
+  "한동훈":  { party: "무소속",       color: "#b5bdcc", short: "무소속", photo: "images/한동훈.webp" },
+  "박민식":  { party: "국민의힘",     color: "#e74c5e", short: "국힘",   photo: "images/박민식.webp" },
 };
 
 const fmt = {
@@ -74,9 +74,12 @@ function renderCandidates(pred) {
     card.style.setProperty("--card-color", meta.color);
     card.innerHTML = `
       <div class="cand-row">
-        <div>
-          <div class="cand-name">${name}</div>
-          <div class="cand-party">${meta.party}</div>
+        <div class="cand-identity">
+          <img class="cand-photo" src="${meta.photo}" alt="${name}" loading="lazy" />
+          <div>
+            <div class="cand-name">${name}</div>
+            <div class="cand-party">${meta.party}</div>
+          </div>
         </div>
         <div class="cand-pct-wrap">
           <div class="cand-pct">${(winP * 100).toFixed(1)}%</div>
@@ -406,23 +409,58 @@ function renderPolls(pred) {
   }
 }
 
+// Tabs: render charts lazily on first activation so they aren't sized to 0
+// while their panel is display:none.
+const TAB_RENDERERS = {};
+const TAB_RENDERED  = new Set();
+
+function activateTab(tabId) {
+  document.querySelectorAll(".tab-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.tab === tabId);
+  });
+  document.querySelectorAll(".tab-panel").forEach(p => {
+    p.classList.toggle("active", p.id === `tab-${tabId}`);
+  });
+  if (!TAB_RENDERED.has(tabId) && TAB_RENDERERS[tabId]) {
+    requestAnimationFrame(() => {
+      try { TAB_RENDERERS[tabId](); } catch (e) { console.error(e); }
+      TAB_RENDERED.add(tabId);
+    });
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function bindTabs() {
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => activateTab(btn.dataset.tab));
+  });
+}
+
 async function init() {
   applyChartDefaults();
+  bindTabs();
   try {
     const [pred, timeline] = await Promise.all([
       loadJSON("data/predictions.json"),
       loadJSON("data/history_timeline.json").catch(() => []),
     ]);
 
+    // Summary tab (always visible at load)
     renderUpdated(pred);
     renderHeadline(pred);
     renderCandidates(pred);
     renderShyConservative(pred);
-    renderVoteShareChart(pred);
-    renderScenarioChart(pred);
-    renderHistoryChart(timeline);
+
+    // Methodology tab content that isn't a chart (numbers/pills) — safe to render now
     renderMethodNumbers(pred);
-    renderPolls(pred);
+
+    // Charts: defer until their tab is opened (canvas needs nonzero width)
+    TAB_RENDERERS.details   = () => { renderVoteShareChart(pred); renderHistoryChart(timeline); };
+    TAB_RENDERERS.scenarios = () => { renderScenarioChart(pred); };
+    TAB_RENDERERS.polls     = () => { renderPolls(pred); };
+    TAB_RENDERERS.method    = () => {};
+
+    TAB_RENDERED.add("summary");
   } catch (e) {
     console.error(e);
     document.querySelector("main").insertAdjacentHTML(
