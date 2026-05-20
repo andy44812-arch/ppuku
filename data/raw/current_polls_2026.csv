@@ -1,32 +1,62 @@
-poll_date,pollster,sample_size,response_rate_pct,election,candidate,party,support_pct,notes
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection,하정우,더불어민주당,34.3,3-way race
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection,한동훈,무소속,33.5,3-way race
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection,박민식,국민의힘,21.5,3-way race
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection_2way_A,한동훈,무소속,38.2,head-to-head 한동훈 vs 하정우
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,37.4,head-to-head 한동훈 vs 하정우
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,33.1,head-to-head 박민식 vs 하정우
-2026-05-05,부산MBC-한길리서치,584,5.3,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,39.7,head-to-head 박민식 vs 하정우
-2026-05-14,(unknown),(unknown),(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,39.0,
-2026-05-14,(unknown),(unknown),(unknown),2026_buksu_gap_byelection,한동훈,무소속,29.0,
-2026-05-14,(unknown),(unknown),(unknown),2026_buksu_gap_byelection,박민식,국민의힘,21.0,
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,41.7,3-way race
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection,한동훈,무소속,32.2,3-way race
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection,박민식,국민의힘,21.1,3-way race
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_A,한동훈,무소속,38.1,head-to-head 한동훈 vs 하정우
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,42.9,head-to-head 한동훈 vs 하정우
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,26.3,head-to-head 박민식 vs 하정우
-2026-05-15,여론조사꽃,502,(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.6,head-to-head 박민식 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,39.0,3-way race
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,한동훈,무소속,33.0,3-way race
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,박민식,국민의힘,20.0,3-way race
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_A,한동훈,무소속,39.0,head-to-head 한동훈 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.0,head-to-head 한동훈 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,30.0,head-to-head 박민식 vs 하정우
-2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.0,head-to-head 박민식 vs 하정우
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection,하정우,더불어민주당,40.4,3-way race
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection,한동훈,무소속,32.7,3-way race
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection,박민식,국민의힘,20.9,3-way race
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection_2way_A,한동훈,무소속,40.0,head-to-head 한동훈 vs 하정우
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.8,head-to-head 한동훈 vs 하정우
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,29.6,head-to-head 박민식 vs 하정우
-2026-05-18,뉴시스-에이스리서치,504,9.0,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,47.2,head-to-head 박민식 vs 하정우
+poll_date,fieldwork_start,fieldwork_end,pollster,pollster_lean,sample_size,response_rate_pct,election,candidate,party,support_pct,notes
+2026-04-27,2026-04-24,2026-04-25,뉴스토마토-미디어토마토,left,802,9.0,2026_buksu_gap_byelection,하정우,더불어민주당,35.5,early poll
+2026-04-27,2026-04-24,2026-04-25,뉴스토마토-미디어토마토,left,802,9.0,2026_buksu_gap_byelection,한동훈,무소속,28.5,early poll
+2026-04-27,2026-04-24,2026-04-25,뉴스토마토-미디어토마토,left,802,9.0,2026_buksu_gap_byelection,박민식,국민의힘,26.0,early poll
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection,하정우,더불어민주당,34.3,3-way race
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection,한동훈,무소속,33.5,3-way race
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection,박민식,국민의힘,21.5,3-way race
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection_2way_A,한동훈,무소속,38.2,head-to-head 한동훈 vs 하정우
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,37.4,head-to-head 한동훈 vs 하정우
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,33.1,head-to-head 박민식 vs 하정우
+2026-05-05,2026-05-01,2026-05-03,부산MBC-한길리서치(1차),centerleft,584,5.3,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,39.7,head-to-head 박민식 vs 하정우
+2026-05-05,2026-05-01,2026-05-03,SBS-입소스,center,503,14.4,2026_buksu_gap_byelection,하정우,더불어민주당,38.0,3-way race
+2026-05-05,2026-05-01,2026-05-03,SBS-입소스,center,503,14.4,2026_buksu_gap_byelection,박민식,국민의힘,26.0,3-way race
+2026-05-05,2026-05-01,2026-05-03,SBS-입소스,center,503,14.4,2026_buksu_gap_byelection,한동훈,무소속,21.0,3-way race
+2026-05-07,2026-05-04,2026-05-05,JTBC-메타보이스,centerleft,501,15.1,2026_buksu_gap_byelection,하정우,더불어민주당,37.0,3-way race
+2026-05-07,2026-05-04,2026-05-05,JTBC-메타보이스,centerleft,501,15.1,2026_buksu_gap_byelection,박민식,국민의힘,26.0,3-way race
+2026-05-07,2026-05-04,2026-05-05,JTBC-메타보이스,centerleft,501,15.1,2026_buksu_gap_byelection,한동훈,무소속,25.0,3-way race
+2026-05-11,2026-05-08,2026-05-10,KBS부산-한국리서치,centerleft,500,22.7,2026_buksu_gap_byelection,하정우,더불어민주당,37.0,3-way race
+2026-05-11,2026-05-08,2026-05-10,KBS부산-한국리서치,centerleft,500,22.7,2026_buksu_gap_byelection,한동훈,무소속,30.0,3-way race
+2026-05-11,2026-05-08,2026-05-10,KBS부산-한국리서치,centerleft,500,22.7,2026_buksu_gap_byelection,박민식,국민의힘,17.0,3-way race
+2026-05-12,2026-05-09,2026-05-10,국제신문-리얼미터,center,506,8.7,2026_buksu_gap_byelection,하정우,더불어민주당,43.4,3-way race
+2026-05-12,2026-05-09,2026-05-10,국제신문-리얼미터,center,506,8.7,2026_buksu_gap_byelection,한동훈,무소속,28.1,3-way race
+2026-05-12,2026-05-09,2026-05-10,국제신문-리얼미터,center,506,8.7,2026_buksu_gap_byelection,박민식,국민의힘,23.1,3-way race
+2026-05-12,2026-05-09,2026-05-10,국제신문-리얼미터,center,506,8.7,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,45.8,head-to-head 한동훈 vs 하정우
+2026-05-12,2026-05-09,2026-05-10,국제신문-리얼미터,center,506,8.7,2026_buksu_gap_byelection_2way_A,한동훈,무소속,35.8,head-to-head 한동훈 vs 하정우
+2026-05-14,2026-05-12,2026-05-13,뉴스1-한국갤럽,center,508,11.3,2026_buksu_gap_byelection,하정우,더불어민주당,39.0,3-way race
+2026-05-14,2026-05-12,2026-05-13,뉴스1-한국갤럽,center,508,11.3,2026_buksu_gap_byelection,한동훈,무소속,29.0,3-way race
+2026-05-14,2026-05-12,2026-05-13,뉴스1-한국갤럽,center,508,11.3,2026_buksu_gap_byelection,박민식,국민의힘,21.0,3-way race
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection,하정우,더불어민주당,35.5,3-way race
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection,한동훈,무소속,32.6,3-way race
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection,박민식,국민의힘,25.5,3-way race
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,39.7,head-to-head 한동훈 vs 하정우
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection_2way_A,한동훈,무소속,37.6,head-to-head 한동훈 vs 하정우
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,39.0,head-to-head 박민식 vs 하정우
+2026-05-14,2026-05-11,2026-05-12,부산MBC-한길리서치(2차),centerleft,501,9.6,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,32.8,head-to-head 박민식 vs 하정우
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection,하정우,더불어민주당,41.7,3-way race
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection,한동훈,무소속,32.2,3-way race
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection,박민식,국민의힘,21.1,3-way race
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,42.9,head-to-head 한동훈 vs 하정우
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection_2way_A,한동훈,무소속,38.1,head-to-head 한동훈 vs 하정우
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.6,head-to-head 박민식 vs 하정우
+2026-05-18,2026-05-14,2026-05-15,여론조사꽃,left,502,9.2,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,26.3,head-to-head 박민식 vs 하정우
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection,하정우,더불어민주당,39.0,3-way race
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection,한동훈,무소속,33.0,3-way race
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection,박민식,국민의힘,20.0,3-way race
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.0,head-to-head 한동훈 vs 하정우
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection_2way_A,한동훈,무소속,39.0,head-to-head 한동훈 vs 하정우
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.0,head-to-head 박민식 vs 하정우
+2026-05-19,2026-05-16,2026-05-17,조선일보-메트릭스,right,501,16.5,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,30.0,head-to-head 박민식 vs 하정우
+2026-05-19,2026-05-16,2026-05-18,MBC-코리아리서치,centerleft,500,14.5,2026_buksu_gap_byelection,하정우,더불어민주당,38.0,3-way race
+2026-05-19,2026-05-16,2026-05-18,MBC-코리아리서치,centerleft,500,14.5,2026_buksu_gap_byelection,한동훈,무소속,33.0,3-way race
+2026-05-19,2026-05-16,2026-05-18,MBC-코리아리서치,centerleft,500,14.5,2026_buksu_gap_byelection,박민식,국민의힘,20.0,3-way race
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection,하정우,더불어민주당,40.4,3-way race
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection,한동훈,무소속,32.7,3-way race
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection,박민식,국민의힘,20.9,3-way race
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.8,head-to-head 한동훈 vs 하정우
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection_2way_A,한동훈,무소속,40.0,head-to-head 한동훈 vs 하정우
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,47.2,head-to-head 박민식 vs 하정우
+2026-05-19,2026-05-17,2026-05-18,뉴시스-에이스리서치,center,504,9.0,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,29.6,head-to-head 박민식 vs 하정우
+2026-05-20,2026-05-17,2026-05-19,채널A-리서치앤리서치,right,500,10.0,2026_buksu_gap_byelection,한동훈,무소속,34.6,3-way race - 유일한 한동훈 1위
+2026-05-20,2026-05-17,2026-05-19,채널A-리서치앤리서치,right,500,10.0,2026_buksu_gap_byelection,하정우,더불어민주당,32.9,3-way race - 유일한 한동훈 1위
+2026-05-20,2026-05-17,2026-05-19,채널A-리서치앤리서치,right,500,10.0,2026_buksu_gap_byelection,박민식,국민의힘,20.5,3-way race - 유일한 한동훈 1위

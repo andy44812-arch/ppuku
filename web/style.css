@@ -493,6 +493,280 @@ main {
 }
 
 /* ============================================================
+   SHY CONSERVATIVE
+   ============================================================ */
+.shy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1.2fr;
+  gap: 16px;
+}
+@media (max-width: 880px) {
+  .shy-grid { grid-template-columns: 1fr; }
+}
+.shy-big-card,
+.shy-method-card,
+.shy-impact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+.shy-big-card {
+  background: linear-gradient(160deg, #2a1e34 0%, #1a1a2e 100%);
+  border-color: #5a3068;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.shy-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.shy-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 10px 0 6px;
+  background: linear-gradient(180deg, #f0b429 0%, #e88a3c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.shy-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+.shy-confidence {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  font-size: 12px;
+  color: var(--text-faint);
+  width: 100%;
+}
+.shy-confidence strong { color: var(--text); font-weight: 600; }
+.shy-h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.shy-evidence {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.shy-evidence li {
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
+}
+.shy-evidence li:last-child { border-bottom: none; }
+.shy-year {
+  font-weight: 600;
+  color: var(--text);
+}
+.shy-delta {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  background: rgba(240, 180, 41, 0.12);
+  color: var(--risk-yellow);
+  border: 1px solid rgba(240, 180, 41, 0.3);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.shy-formula {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text);
+}
+.shy-formula strong { color: var(--risk-yellow); }
+.shy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.shy-table th, .shy-table td {
+  padding: 8px 4px;
+  border-bottom: 1px dashed var(--border);
+}
+.shy-table th {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-align: left;
+}
+.shy-table .r { text-align: right; font-variant-numeric: tabular-nums; }
+.shy-table td.delta { font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+.shy-table td.delta.pos { color: #4ade80; }
+.shy-table td.delta.neg { color: var(--c-park); }
+.shy-table td.delta.neutral { color: var(--text-dim); }
+.shy-cand-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.shy-note {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.shy-pill {
+  background: rgba(240, 180, 41, 0.18) !important;
+  border-color: rgba(240, 180, 41, 0.5) !important;
+  color: var(--risk-yellow) !important;
+}
+
+/* ============================================================
+   LEAN BADGES (used in polls + sources)
+   ============================================================ */
+.lean-badge,
+.src-tag.lean-right,
+.src-tag.lean-left,
+.src-tag.lean-center,
+.src-tag.lean-centerleft,
+.num-pill.lean-right,
+.num-pill.lean-left,
+.num-pill.lean-centerleft {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  font-family: 'Pretendard', sans-serif;
+}
+.lean-badge.lean-right, .src-tag.lean-right, .num-pill.lean-right {
+  background: rgba(231,76,94,0.14); color: var(--c-park); border-color: rgba(231,76,94,0.35);
+}
+.lean-badge.lean-left, .src-tag.lean-left, .num-pill.lean-left {
+  background: rgba(47,111,219,0.16); color: var(--c-ha); border-color: rgba(47,111,219,0.4);
+}
+.lean-badge.lean-centerleft, .src-tag.lean-centerleft, .num-pill.lean-centerleft {
+  background: rgba(110,168,255,0.12); color: var(--accent); border-color: rgba(110,168,255,0.35);
+}
+.lean-badge.lean-center, .src-tag.lean-center {
+  background: rgba(181,189,204,0.15); color: var(--c-han); border-color: rgba(181,189,204,0.4);
+}
+.poll-legend {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.method-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 880px) {
+  .method-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .method-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   POLLS COMPACT GRID (dynamic from app.js)
+   ============================================================ */
+.poll-grid-compact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+@media (max-width: 880px) {
+  .poll-grid-compact { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .poll-grid-compact { grid-template-columns: 1fr; }
+}
+.poll-card-c {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  position: relative;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.poll-card-c:hover {
+  transform: translateY(-1px);
+  border-color: #334065;
+}
+.poll-card-c.hilite {
+  border-color: var(--c-han);
+  box-shadow: 0 0 0 1px var(--c-han) inset;
+}
+.pc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.pc-source {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pc-meta {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pc-weight {
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.pc-bars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.pc-bars .pb {
+  font-size: 11px;
+  padding: 3px 7px;
+}
+.pc-bars .pb.lead {
+  font-weight: 700;
+  border: 1px solid currentColor;
+}
+.pc-flag {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--c-han);
+  font-weight: 600;
+}
+
+/* ============================================================
    POLLS COMPARISON
    ============================================================ */
 .poll-grid {

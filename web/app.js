@@ -331,6 +331,81 @@ function renderMethodNumbers(pred) {
   ).join("");
 }
 
+function renderShyConservative(pred) {
+  const sc = pred.shy_conservative;
+  if (!sc || !sc.applied) return;
+  setText("shy-number", `+${sc.magnitude_pct.toFixed(1)}%p`);
+  setText("shy-confidence", sc.confidence === "high" ? "높음" : sc.confidence === "low" ? "낮음" : "중간");
+
+  const cf = pred.counterfactual_no_shy;
+  if (!cf) return;
+  const tbody = document.querySelector("#shy-impact-table tbody");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  for (const c of pred.candidates) {
+    const without = (cf.win_probability[c] || 0) * 100;
+    const withShy = (pred.win_probability[c] || 0) * 100;
+    const delta = withShy - without;
+    const meta = CANDIDATE_META[c];
+    const deltaStr = (delta >= 0 ? "+" : "") + delta.toFixed(1) + "%p";
+    const deltaClass = delta > 0.5 ? "pos" : delta < -0.5 ? "neg" : "neutral";
+    tbody.innerHTML += `
+      <tr>
+        <td><span class="shy-cand-dot" style="background:${meta.color}"></span>${c}</td>
+        <td class="r">${without.toFixed(1)}%</td>
+        <td class="r"><strong>${withShy.toFixed(1)}%</strong></td>
+        <td class="r delta ${deltaClass}">${deltaStr}</td>
+      </tr>
+    `;
+  }
+}
+
+const LEAN_LABEL = {
+  right: "우파",
+  center: "중도",
+  centerleft: "중도좌",
+  left: "좌파",
+};
+
+function renderPolls(pred) {
+  const wrap = document.getElementById("polls-grid");
+  if (!wrap || !pred.poll || !pred.poll.polls_used) return;
+  wrap.innerHTML = "";
+  // Sort by weight desc (most influential first)
+  const polls = [...pred.poll.polls_used].sort((a, b) => b.weight - a.weight);
+  for (const p of polls) {
+    const han = p.support["한동훈"] * 100;
+    const ha = p.support["하정우"] * 100;
+    const park = p.support["박민식"] * 100;
+    const hanLead = han > ha;
+    const close = Math.abs(han - ha) < 3;
+    const star = hanLead ? "⭐ 한동훈 1위" : close ? "⚡ 박빙" : "";
+    const fwStart = p.fieldwork_start.slice(5).replace("-", "/");
+    const fwEnd = p.fieldwork_end.slice(5).replace("-", "/");
+    const fwDisplay = fwStart === fwEnd ? fwStart : `${fwStart}–${fwEnd}`;
+    const leanLabel = LEAN_LABEL[p.lean] || p.lean;
+    const cardClass = hanLead ? "poll-card-c hilite" : "poll-card-c";
+    wrap.innerHTML += `
+      <div class="${cardClass}">
+        <div class="pc-head">
+          <div class="pc-source">${p.pollster}</div>
+          <span class="lean-badge lean-${p.lean}">${leanLabel}</span>
+        </div>
+        <div class="pc-meta">
+          조사 ${fwDisplay} · n=${p.n} · ${p.days_old.toFixed(0)}일 전
+          <span class="pc-weight" title="모델 가중치">w=${p.weight.toFixed(2)}</span>
+        </div>
+        <div class="pc-bars">
+          ${ha >= han && ha >= park ? `<span class="pb ha lead">하 ${ha.toFixed(1)}</span>` : `<span class="pb ha">하 ${ha.toFixed(1)}</span>`}
+          ${han > ha ? `<span class="pb han lead">한 ${han.toFixed(1)}</span>` : `<span class="pb han">한 ${han.toFixed(1)}</span>`}
+          <span class="pb park">박 ${park.toFixed(1)}</span>
+        </div>
+        ${star ? `<div class="pc-flag">${star}</div>` : ""}
+      </div>
+    `;
+  }
+}
+
 async function init() {
   applyChartDefaults();
   try {
@@ -342,10 +417,12 @@ async function init() {
     renderUpdated(pred);
     renderHeadline(pred);
     renderCandidates(pred);
+    renderShyConservative(pred);
     renderVoteShareChart(pred);
     renderScenarioChart(pred);
     renderHistoryChart(timeline);
     renderMethodNumbers(pred);
+    renderPolls(pred);
   } catch (e) {
     console.error(e);
     document.querySelector("main").insertAdjacentHTML(
