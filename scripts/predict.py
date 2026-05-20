@@ -112,60 +112,94 @@ print(f"사전 강도 (alpha 합): {PRIOR_STRENGTH}")
 print(f"사전 alpha: {dict(zip(CANDIDATES, prior_alpha.round(2)))}")
 
 # ============================================================
-# 2. 우도 (여론조사) — CSV에서 유효한 가장 최근 3자대결 폴 자동 선택
+# 2. 우도 (여론조사) — 최근 폴 다수를 recency-weighted 평균
 # ============================================================
 polls_df = pd.read_csv(DATA / "current_polls_2026.csv")
-# 3자 대결만 사용
 threeway = polls_df[polls_df["election"] == "2026_buksu_gap_byelection"].copy()
-# sample_size 가 숫자가 아닌 행 제외
 threeway["sample_size_num"] = pd.to_numeric(threeway["sample_size"], errors="coerce")
-valid = threeway.dropna(subset=["sample_size_num"]).copy()
-valid["poll_date"] = pd.to_datetime(valid["poll_date"])
-# 최근 폴 (날짜 동률이면 표본 큰 것)
-valid = valid.sort_values(["poll_date", "sample_size_num"], ascending=[False, False])
-latest_date = valid["poll_date"].max()
-latest_poll = valid[valid["poll_date"] == latest_date]
+threeway = threeway.dropna(subset=["sample_size_num"]).copy()
+threeway["poll_date"] = pd.to_datetime(threeway["poll_date"])
 
-support_map = {row["candidate"]: row["support_pct"] / 100.0 for _, row in latest_poll.iterrows()}
-n_sample = int(latest_poll["sample_size_num"].iloc[0])
-pollster = str(latest_poll["pollster"].iloc[0])
-poll_date_str = latest_date.date().isoformat()
-undecided = 1.0 - sum(support_map.values())
+# 최근 윈도우 내 폴만 사용
+RECENCY_WINDOW_DAYS = 14
+TIME_DECAY_HALFLIFE = 7  # days
+today_ts = pd.to_datetime(AS_OF)
+threeway["days_old"] = (today_ts - threeway["poll_date"]).dt.days
+recent = threeway[(threeway["days_old"] >= 0) & (threeway["days_old"] <= RECENCY_WINDOW_DAYS)].copy()
+if recent.empty:
+    recent = threeway.copy()  # fallback: 전체
+
+# 폴별 1행 (날짜·기관 단위로 후보 3명 묶임)
+pivoted = recent.pivot_table(
+    index=["poll_date", "pollster", "sample_size_num", "days_old"],
+    columns="candidate",
+    values="support_pct",
+    aggfunc="first",
+).reset_index()
+
+# 시간 가중치 (반감기 7일)
+pivoted["weight"] = 0.5 ** (pivoted["days_old"] / TIME_DECAY_HALFLIFE)
+
+total_w = pivoted["weight"].sum()
+support_avg = {c: float((pivoted[c] * pivoted["weight"]).sum() / total_w / 100.0) for c in CANDIDATES}
+undecided_avg = max(0.0, 1.0 - sum(support_avg.values()))
+
+# Effective sample size: 폴 간 변동성과 비표본오차를 반영해 design_effect 로 할인
+total_n = int(pivoted["sample_size_num"].sum())
+DESIGN_EFFECT = 7.0  # polling industry rule of thumb: total survey error ≈ √DE × sampling MOE; 한국 보궐 사례 기준 보수적
+N_EFFECTIVE = max(50.0, total_n / DESIGN_EFFECT)
+
+polls_used_list = [
+    {
+        "date": row["poll_date"].date().isoformat(),
+        "pollster": row["pollster"],
+        "n": int(row["sample_size_num"]),
+        "support": {c: float(row[c] / 100.0) for c in CANDIDATES},
+        "weight": float(round(row["weight"], 3)),
+    }
+    for _, row in pivoted.iterrows()
+]
 
 POLL = {
-    "n": n_sample,
-    "pollster": pollster,
-    "date": poll_date_str,
-    "support": support_map,
-    "undecided": float(round(undecided, 4)),
+    "method": f"최근 {RECENCY_WINDOW_DAYS}일 폴 {len(pivoted)}건 recency-weighted 평균 (반감기 {TIME_DECAY_HALFLIFE}일)",
+    "n_polls": int(len(pivoted)),
+    "n_total_raw": total_n,
+    "n_effective": float(round(N_EFFECTIVE, 1)),
+    "design_effect": DESIGN_EFFECT,
+    "support": support_avg,
+    "undecided": float(round(undecided_avg, 4)),
+    "polls_used": polls_used_list,
+    # 호환성을 위해 가장 최근 폴의 메타 표시
+    "source": f"{len(pivoted)}건 평균 (최신: {pivoted.iloc[pivoted['days_old'].argmin()]['pollster']})",
+    "date": pivoted.iloc[pivoted["days_old"].argmin()]["poll_date"].date().isoformat(),
+    "n": int(N_EFFECTIVE),  # 기존 키 유지 — 이제 effective n
 }
-print(f"\n[POLL] 자동 선택: {pollster} {poll_date_str} (n={n_sample})")
-print(f"       {support_map}, 부동층={POLL['undecided']:.3f}")
+print(f"\n[POLL] {POLL['method']}")
+print(f"       원 표본 합계 n={total_n}, design_effect={DESIGN_EFFECT}, n_effective={N_EFFECTIVE:.0f}")
+print(f"       가중평균 지지율: {support_avg}, 부동층={undecided_avg:.3f}")
 
-# 부동층 배분: 보수 분열 상황에서 한동훈은 부동층 흡수력 ↑
-# (인지도, 미디어 노출, "신선함" 효과)
-# 시나리오를 여러 개 두고 추후 민감도 분석
+# 부동층 배분
 UNDECIDED_ALLOCATION = {
-    "하정우": 0.35,  # 민주 지지 부동층
-    "한동훈": 0.40,  # 보수 + 중도 부동층
-    "박민식": 0.25,  # 보수 잔여
+    "하정우": 0.35,
+    "한동훈": 0.40,
+    "박민식": 0.25,
 }
 
 print("=" * 60)
-print("STEP 2. 우도 (Likelihood) - 부산MBC-한길리서치 2026-05-05")
+print(f"STEP 2. 우도 (Likelihood) — 폴 평균 (n_eff={N_EFFECTIVE:.0f})")
 print("=" * 60)
 adjusted_poll = {}
 for c in CANDIDATES:
-    adjusted = POLL["support"][c] + POLL["undecided"] * UNDECIDED_ALLOCATION[c]
+    adjusted = support_avg[c] + undecided_avg * UNDECIDED_ALLOCATION[c]
     adjusted_poll[c] = adjusted
-    print(f"  {c}: 원지지율 {POLL['support'][c]:.3f} → 부동층배분 후 {adjusted:.3f}")
+    print(f"  {c}: 원지지율 {support_avg[c]:.3f} → 부동층배분 후 {adjusted:.3f}")
 adjusted_total = sum(adjusted_poll.values())
 adjusted_poll = {k: v / adjusted_total for k, v in adjusted_poll.items()}
 print()
 
-# 여론조사를 "가상 다항분포 관측치"로 변환
-poll_counts = np.array([adjusted_poll[c] * POLL["n"] for c in CANDIDATES])
-print(f"여론조사 환산 표본 수: {dict(zip(CANDIDATES, poll_counts.round(1)))}")
+# 여론조사를 "가상 다항분포 관측치"로 변환 (n_effective 기준)
+poll_counts = np.array([adjusted_poll[c] * N_EFFECTIVE for c in CANDIDATES])
+print(f"여론조사 환산 표본 수 (n_eff): {dict(zip(CANDIDATES, poll_counts.round(1)))}")
 
 # ============================================================
 # 3. 사후분포 (Dirichlet)
@@ -186,8 +220,28 @@ print(f"사후 평균 득표율: {dict(zip(CANDIDATES, [f'{x:.3f}' for x in post
 RNG = np.random.default_rng(42)
 N_SIMS = 10_000
 
-samples = RNG.dirichlet(posterior_alpha, size=N_SIMS)
-# samples.shape = (N_SIMS, 3)
+# 4-1. 사후 Dirichlet 샘플 (현재 폴 평균이 가리키는 vote share)
+posterior_samples = RNG.dirichlet(posterior_alpha, size=N_SIMS)
+
+# 4-2. 선거일 드리프트 — 남은 일수에 비례하는 정규 노이즈
+# 기준: 14일 = 3.5%p (역사적 polling-vs-result RMSE 수준)
+DRIFT_SIGMA_AT_14D = 0.045  # 14일 = 4.5%p (한국 보궐선거 polling miss 평균 ~4-5%p)
+days_factor = max(1.0, DAYS_UNTIL) / 14.0
+sigma_drift = DRIFT_SIGMA_AT_14D * np.sqrt(days_factor)
+
+# 보수 후보(한동훈, 박민식) 간 음의 상관 — 한쪽이 오르면 다른쪽이 깎임
+# Cov matrix: 하정우는 독립, 한·박은 ρ=-0.5 상관
+cov = np.array([
+    [sigma_drift**2, 0.0,            0.0],
+    [0.0,            sigma_drift**2, -0.5 * sigma_drift**2],
+    [0.0,            -0.5 * sigma_drift**2, sigma_drift**2],
+])
+drift = RNG.multivariate_normal(mean=np.zeros(3), cov=cov, size=N_SIMS)
+
+# 4-3. 선거일 vote share = 사후 샘플 + 드리프트 (음수 클립 + 재정규화)
+samples = posterior_samples + drift
+samples = np.clip(samples, 1e-4, None)
+samples = samples / samples.sum(axis=1, keepdims=True)
 
 # 당선자 = argmax
 winners = np.argmax(samples, axis=1)
@@ -260,6 +314,18 @@ scenarios["민주 결집"][2] *= 0.94
 scenario_results = {}
 for name, alpha in scenarios.items():
     sims = RNG.dirichlet(alpha, size=N_SIMS)
+    # 단일화 시나리오에서는 사퇴 후보를 0 으로 고정 — 드리프트도 0
+    if "단일화" in name:
+        drift_sc = drift.copy()
+        if "한동훈" in name:
+            drift_sc[:, 2] = 0  # 박민식 사퇴
+        else:
+            drift_sc[:, 1] = 0  # 한동훈 사퇴
+    else:
+        drift_sc = drift
+    sims = sims + drift_sc
+    sims = np.clip(sims, 1e-4, None)
+    sims = sims / sims.sum(axis=1, keepdims=True)
     wins = np.argmax(sims, axis=1)
     win_p = {CANDIDATES[i]: float((wins == i).mean()) for i in range(3)}
     means = sims.mean(axis=0)
@@ -299,12 +365,25 @@ predictions = {
         "prior_alpha": dict(zip(CANDIDATES, prior_alpha.tolist())),
     },
     "poll": {
-        "source": POLL["pollster"],
+        "source": POLL["source"],
         "date": POLL["date"],
         "n": POLL["n"],
+        "method": POLL["method"],
+        "n_polls": POLL["n_polls"],
+        "n_total_raw": POLL["n_total_raw"],
+        "n_effective": POLL["n_effective"],
+        "design_effect": POLL["design_effect"],
         "support": POLL["support"],
         "undecided": POLL["undecided"],
         "undecided_allocation": UNDECIDED_ALLOCATION,
+        "polls_used": POLL["polls_used"],
+    },
+    "drift": {
+        "sigma_drift": float(sigma_drift),
+        "days_factor": float(days_factor),
+        "sigma_at_14d": DRIFT_SIGMA_AT_14D,
+        "han_park_correlation": -0.5,
+        "note": "Election-day drift Gaussian noise added to Dirichlet posterior",
     },
     "posterior_alpha": dict(zip(CANDIDATES, posterior_alpha.tolist())),
     "posterior_mean": dict(zip(CANDIDATES, posterior_mean.tolist())),

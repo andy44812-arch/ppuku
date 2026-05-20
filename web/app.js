@@ -316,12 +316,14 @@ function renderMethodNumbers(pred) {
     <span class="num-pill">강도 ${prior.prior_strength}</span>
   `;
   const poll = pred.poll;
-  document.getElementById("poll-numbers").innerHTML = `
-    <span class="num-pill">${poll.source}</span>
-    <span class="num-pill">${poll.date}</span>
-    <span class="num-pill">n = ${poll.n}</span>
-    <span class="num-pill">부동층 ${(poll.undecided * 100).toFixed(1)}%</span>
-  `;
+  const pollPills = [
+    `<span class="num-pill">${poll.n_polls ?? 1}건 평균</span>`,
+    `<span class="num-pill">Σn = ${poll.n_total_raw ?? poll.n}</span>`,
+    `<span class="num-pill">n_eff = ${Math.round(poll.n_effective ?? poll.n)}</span>`,
+    `<span class="num-pill">DE = ${poll.design_effect ?? "—"}</span>`,
+    `<span class="num-pill">부동층 ${(poll.undecided * 100).toFixed(1)}%</span>`,
+  ];
+  document.getElementById("poll-numbers").innerHTML = pollPills.join("");
   const post = pred.posterior_alpha;
   const postMean = pred.posterior_mean;
   document.getElementById("posterior-numbers").innerHTML = pred.candidates.map(c =>

@@ -422,6 +422,7 @@ main {
 }
 .risk.yellow { background: rgba(240, 180, 41, 0.15); color: var(--risk-yellow); }
 .risk.red { background: rgba(231, 76, 94, 0.15); color: var(--risk-red); }
+.risk.green { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
 
 /* ============================================================
    CONTEXT

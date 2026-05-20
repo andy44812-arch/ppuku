@@ -98,21 +98,21 @@
         </div>
         <div class="method-card">
           <div class="method-step">STEP 2 · 우도</div>
-          <h3>최신 여론조사</h3>
-          <p>가장 최근 유효 여론조사를 자동 선택. 부동층은 후보별 흡수 가정(하정우 35% / 한동훈 40% / 박민식 25%)으로 배분.</p>
+          <h3>최근 14일 폴 가중평균</h3>
+          <p>최근 14일 내 3자 여론조사 다수를 <strong>recency-weighted 평균</strong>(반감기 7일). 단일 폴 의존을 제거해 폴 간 변동성도 반영. 부동층은 후보별 흡수 가정(하정우 35% / 한동훈 40% / 박민식 25%)으로 배분.</p>
           <div class="method-numbers" id="poll-numbers"></div>
         </div>
         <div class="method-card">
           <div class="method-step">STEP 3 · 사후분포</div>
-          <h3>베이지안 업데이트</h3>
-          <p>Dirichlet-Multinomial 결합. 사전 강도 = 200 (5회 선거 ≈ 가상 표본 200명). 여론조사를 가상 다항분포 관측치로 변환하여 alpha 합산.</p>
+          <h3>Effective Sample + 베이지안</h3>
+          <p>Dirichlet-Multinomial 결합. 폴 표본 합계를 <strong>design_effect=7</strong>로 할인한 effective n 사용 (비표본오차·polling miss 반영). 사전 강도 = 200.</p>
           <div class="method-numbers" id="posterior-numbers"></div>
         </div>
         <div class="method-card">
-          <div class="method-step">STEP 4 · Monte Carlo</div>
-          <h3>10,000회 시뮬레이션</h3>
-          <p>사후 Dirichlet에서 10,000번 샘플링하고 각 회마다 argmax = 당선자. 시나리오 분석은 alpha 조정 후 동일 절차 반복.</p>
-          <div class="method-numbers"><span class="num-pill">N = 10,000</span><span class="num-pill">3-way</span><span class="num-pill">argmax</span></div>
+          <div class="method-step">STEP 4 · Monte Carlo + 드리프트</div>
+          <h3>10,000회 + 선거일 드리프트</h3>
+          <p>사후 Dirichlet에서 10,000번 샘플링 + <strong>선거일까지의 변동성</strong>을 정규 노이즈(σ=4.5%p @ 14일, 보수 후보 간 ρ=−0.5)로 주입. 각 회마다 argmax = 당선자.</p>
+          <div class="method-numbers"><span class="num-pill">N = 10,000</span><span class="num-pill">σ_drift = 4.5%p</span><span class="num-pill">ρ(한,박) = −0.5</span></div>
         </div>
       </div>
     </section>
@@ -132,7 +132,13 @@
           <div>보수 베이스 65%가 한동훈으로</div><div>여론조사 반영</div><div><span class="risk yellow">중간</span></div>
         </div>
         <div class="assump-row">
-          <div>가장 최근 여론조사(뉴시스-에이스리서치)에 우도(likelihood) 가중</div><div>최신 폴 우선</div><div><span class="risk yellow">중간</span></div>
+          <div>최근 14일 폴 다수 평균 (반감기 7일)</div><div>aggregate</div><div><span class="risk green">낮음</span></div>
+        </div>
+        <div class="assump-row">
+          <div>Design effect = 7 (n_eff = Σn / 7) — 비표본오차·polling miss 반영</div><div>업계 표준 +α</div><div><span class="risk yellow">중간</span></div>
+        </div>
+        <div class="assump-row">
+          <div>선거일 드리프트 σ = 4.5%p (14일 기준)</div><div>보수 후보 간 ρ = −0.5</div><div><span class="risk yellow">중간</span></div>
         </div>
         <div class="assump-row">
           <div>보궐 투표율 하락 → 진보 -2%p</div><div>과거 패턴 적용</div><div><span class="risk yellow">중간</span></div>
@@ -149,7 +155,7 @@
     <!-- POLLS COMPARISON -->
     <section class="section">
       <h2 class="section-title">여론조사 모음 (3자 + 양자대결)</h2>
-      <p class="section-sub">현재까지 공개된 부산 북구갑 여론조사를 한눈에 — 한동훈이 하정우를 앞선 결과는 단 1건</p>
+      <p class="section-sub">현재까지 공개된 부산 북구갑 여론조사 한눈에 — 한동훈이 하정우를 앞선 결과는 단 1건. <strong>모델은 최근 14일 폴 3건(여론조사꽃·메트릭스·에이스리서치)을 recency-weighted 평균</strong>해 사용.</p>
 
       <div class="poll-grid">
         <div class="poll-card hilite">
@@ -286,7 +292,7 @@
 
         <div class="poll-card current">
           <div class="poll-head">
-            <div class="poll-source">뉴시스 · 에이스리서치 <span class="pill-now">현재 모델 입력</span></div>
+            <div class="poll-source">뉴시스 · 에이스리서치 <span class="pill-now">최신폴</span></div>
             <div class="poll-meta">2026-05-17~05-18 · n=504 · 응답률 9.0%</div>
           </div>
           <div class="poll-row">
