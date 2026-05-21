@@ -60,3 +60,17 @@ poll_date,fieldwork_start,fieldwork_end,pollster,pollster_lean,sample_size,respo
 2026-05-20,2026-05-17,2026-05-19,채널A-리서치앤리서치,right,500,10.0,2026_buksu_gap_byelection,한동훈,무소속,34.6,3-way race - 유일한 한동훈 1위
 2026-05-20,2026-05-17,2026-05-19,채널A-리서치앤리서치,right,500,10.0,2026_buksu_gap_byelection,하정우,더불어민주당,32.9,3-way race - 유일한 한동훈 1위
 2026-05-20,2026-05-17,2026-05-19,채널A-리서치앤리서치,right,500,10.0,2026_buksu_gap_byelection,박민식,국민의힘,20.5,3-way race - 유일한 한동훈 1위
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection,하정우,더불어민주당,35.0,3-way race
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection,한동훈,무소속,31.0,3-way race
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection,박민식,국민의힘,20.0,3-way race
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.0,head-to-head 한동훈 vs 하정우
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection_2way_A,한동훈,무소속,32.0,head-to-head 한동훈 vs 하정우
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,38.0,head-to-head 박민식 vs 하정우
+2026-05-20,2026-05-17,2026-05-19,중앙일보-케이스탯리서치,center,500,12.5,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,38.0,head-to-head 박민식 vs 하정우
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection,하정우,더불어민주당,35.7,3-way race (ARS)
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection,한동훈,무소속,33.0,3-way race (ARS)
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection,박민식,국민의힘,24.8,3-way race (ARS)
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,39.5,head-to-head 한동훈 vs 하정우
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_A,한동훈,무소속,40.8,head-to-head 한동훈 vs 하정우
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,42.2,head-to-head 박민식 vs 하정우
+2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,32.7,head-to-head 박민식 vs 하정우
