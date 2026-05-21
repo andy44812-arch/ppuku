@@ -17,15 +17,20 @@ LOG_FILE="$LOG_DIR/update_$(date +%Y-%m-%d).log"
   echo "================================================"
 
   echo ""
-  echo "--- [1/3] 부산 북구갑 보궐선거 ---"
+  echo "--- [0/4] NESDC 신규 폴 확인 ---"
+  # 자동 추가 안 함. 신규 발견 시 pending_polls_*.csv 에 적어두고 알림.
+  "$ROOT/.venv/bin/python" "$ROOT/scripts/fetch_polls.py" --days 7 || true
+
+  echo ""
+  echo "--- [1/4] 부산 북구갑 보궐선거 ---"
   "$ROOT/.venv/bin/python" "$ROOT/scripts/predict_busan.py"
 
   echo ""
-  echo "--- [2/3] 서울특별시장 선거 ---"
+  echo "--- [2/4] 서울특별시장 선거 ---"
   "$ROOT/.venv/bin/python" "$ROOT/scripts/predict_seoul.py"
 
   echo ""
-  echo "--- [3/3] 여론조사 추세선 (서울 + 부산) ---"
+  echo "--- [3/4] 여론조사 추세선 (서울 + 부산) ---"
   "$ROOT/.venv/bin/python" "$ROOT/scripts/build_poll_trend.py"
 
   echo ""
