@@ -53,6 +53,12 @@ jobs:
           python scripts/predict_busan.py
           python scripts/predict_seoul.py
 
+      - name: Build poll trend (서울 + 부산 골든크로스)
+        env:
+          TZ: Asia/Seoul
+        run: |
+          python scripts/build_poll_trend.py
+
       - name: Commit updated predictions
         run: |
           git config user.name "github-actions[bot]"
