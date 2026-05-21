@@ -143,6 +143,21 @@
     <!-- ==================== TAB: 예측 상세 ==================== -->
     <section class="tab-panel" id="tab-details">
       <div class="section">
+        <h2 class="section-title">📈 여론조사 지지율 추세 · 골든크로스 워치</h2>
+        <p class="section-sub">
+          5월 1일 이후 모든 3자대결 여론조사를 fieldwork 중간일 기준으로 √n × 시간감쇠(반감기 7일) 가중 일별 이동평균.
+          한동훈(무소속)이 하정우(민주)를 추월하면 <strong>골든크로스</strong>예요.
+        </p>
+        <div class="gc-card" id="gc-card-busan">
+          <div class="gc-status" id="gc-status">로딩 중…</div>
+          <div class="gc-detail" id="gc-detail"></div>
+        </div>
+        <div class="chart-card">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <div class="section">
         <h2 class="section-title">예상 득표율 분포</h2>
         <p class="section-sub">
           각 후보가 받을 득표율의 "가능한 범위". 가운데 점은 가장 가능성 높은 값,

@@ -331,6 +331,51 @@ main {
 }
 
 /* ============================================================
+   GOLDEN CROSS CARD
+   ============================================================ */
+.gc-card {
+  background: linear-gradient(135deg, rgba(240, 180, 41, 0.08), rgba(231, 76, 94, 0.06));
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--risk-yellow);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.gc-status {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.gc-detail .gc-line {
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-top: 4px;
+}
+.gc-detail .gc-dim {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+.gc-badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-left: 4px;
+}
+.gc-badge-warn {
+  background: rgba(231, 76, 94, 0.18);
+  color: #ffb3bc;
+  border: 1px solid rgba(231, 76, 94, 0.4);
+}
+.gc-badge-ok {
+  background: rgba(110, 168, 255, 0.14);
+  color: #a8c6ff;
+  border: 1px solid rgba(110, 168, 255, 0.4);
+}
+
+/* ============================================================
    SCENARIO NOTES
    ============================================================ */
 .scenario-notes {

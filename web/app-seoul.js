@@ -303,6 +303,154 @@ function renderHistoryChart(timeline) {
   });
 }
 
+function renderGoldenCrossCard(trend) {
+  const statusEl = document.getElementById("gc-status");
+  const detailEl = document.getElementById("gc-detail");
+  if (!statusEl || !detailEl || !trend) return;
+
+  const leader = trend.golden_cross_pair.leader;
+  const challenger = trend.golden_cross_pair.challenger;
+  const lColor = CANDIDATE_META[leader]?.color || "#888";
+  const cColor = CANDIDATE_META[challenger]?.color || "#888";
+  const gc = trend.golden_cross || {};
+  const ex = gc.extrapolation;
+  const gap = trend.current_gap_pct;
+
+  if (gc.actual_observed_date) {
+    statusEl.innerHTML = `🚨 <span style="color:${cColor}">${challenger}</span> 추세선이 <span style="color:${lColor}">${leader}</span>을 추월 — 골든크로스 발생 (${gc.actual_observed_date})`;
+  } else {
+    statusEl.innerHTML = `현재 추세선상 <span style="color:${lColor}">${leader}</span>가 ${gap.toFixed(1)}%p 우위 · 골든크로스 <strong>미발생</strong>`;
+  }
+
+  if (!ex) {
+    detailEl.innerHTML = `<span class="gc-dim">추세 외삽 불가 (데이터 부족)</span>`;
+    return;
+  }
+
+  const slope = ex.gap_change_pct_per_day;
+  const dir = slope < 0 ? "좁혀짐" : slope > 0 ? "벌어짐" : "변화 없음";
+  const dirColor = slope < 0 ? cColor : lColor;
+
+  let crossLine;
+  if (ex.cross_date_extrapolated) {
+    const reaches = ex.reaches_before_election;
+    const badge = reaches
+      ? `<span class="gc-badge gc-badge-warn">선거일 전 도달 가능</span>`
+      : `<span class="gc-badge gc-badge-ok">선거일 후로 외삽</span>`;
+    crossLine = `현 추세 단순 외삽 시 골든크로스 예상일: <strong>${ex.cross_date_extrapolated}</strong> (D−${ex.days_from_today}일) ${badge}`;
+  } else {
+    crossLine = `현 추세로는 골든크로스 미도달 (${ex.note || ""})`;
+  }
+
+  detailEl.innerHTML = `
+    <div class="gc-line">최근 ${ex.lookback_days_used}일 격차 변화 <strong style="color:${dirColor}">${slope > 0 ? "+" : ""}${slope.toFixed(2)}%p/일</strong> (${dir})</div>
+    <div class="gc-line">${crossLine}</div>
+    <div class="gc-line gc-dim">선형 외삽은 단순 추정치이며 실제 선거는 막판 결집·이벤트로 더 빠르거나 더 늦게 일어날 수 있어요.</div>
+  `;
+}
+
+function renderTrendChart(trend) {
+  const ctx = document.getElementById("trendChart");
+  if (!ctx || !trend || !trend.trend) return;
+
+  const labels = trend.trend.map(d => d.date.slice(5));
+  const dataByCand = {};
+  for (const c of trend.candidates) {
+    dataByCand[c] = trend.trend.map(d => {
+      const v = d.support[c];
+      return v == null ? null : v * 100;
+    });
+  }
+
+  const polls = trend.polls || [];
+  const pollScatterByCand = {};
+  for (const c of trend.candidates) {
+    pollScatterByCand[c] = polls
+      .filter(p => p.support[c] != null)
+      .map(p => ({ x: p.fw_midpoint.slice(5), y: p.support[c] * 100, pollster: p.pollster }));
+  }
+
+  const datasets = [];
+  for (const c of trend.candidates) {
+    const color = CANDIDATE_META[c]?.color || "#888";
+    datasets.push({
+      label: `${c} 추세선`,
+      data: dataByCand[c],
+      borderColor: color,
+      backgroundColor: `${color}22`,
+      borderWidth: 3,
+      pointRadius: 0,
+      pointHoverRadius: 0,
+      tension: 0.35,
+      fill: false,
+      order: 1,
+    });
+    datasets.push({
+      label: `${c} 개별 폴`,
+      data: pollScatterByCand[c],
+      type: "scatter",
+      backgroundColor: `${color}cc`,
+      borderColor: "#0b0f1a",
+      borderWidth: 1.5,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      showLine: false,
+      order: 2,
+    });
+  }
+
+  new Chart(ctx, {
+    type: "line",
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "nearest", intersect: false },
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            padding: 10,
+            boxWidth: 12,
+            filter: (item) => !item.text.includes("개별 폴"),
+          },
+        },
+        tooltip: {
+          backgroundColor: "#0b0f1a",
+          borderColor: "#243054",
+          borderWidth: 1,
+          padding: 12,
+          callbacks: {
+            label: (ctx) => {
+              if (ctx.dataset.type === "scatter") {
+                const p = ctx.raw;
+                return `${ctx.dataset.label.replace(" 개별 폴", "")} · ${p.pollster}: ${p.y.toFixed(1)}%`;
+              }
+              const v = ctx.parsed.y;
+              if (v == null) return null;
+              return `${ctx.dataset.label}: ${v.toFixed(1)}%`;
+            },
+          },
+        },
+      },
+      scales: {
+        y: {
+          min: 25,
+          max: 60,
+          ticks: { color: CHART_DEFAULTS.tickColor, callback: v => `${v}%` },
+          grid: { color: CHART_DEFAULTS.grid },
+          title: { display: true, text: "지지율(%)", color: CHART_DEFAULTS.tickColor },
+        },
+        x: {
+          type: "category",
+          ticks: { color: CHART_DEFAULTS.tickColor, maxRotation: 0, autoSkip: true, maxTicksLimit: 11 },
+          grid: { color: CHART_DEFAULTS.grid },
+        },
+      },
+    },
+  });
+}
+
 function renderMethodNumbers(pred) {
   const prior = pred.prior;
   document.getElementById("prior-numbers").innerHTML = `
@@ -429,9 +577,10 @@ async function init() {
   applyChartDefaults();
   bindTabs();
   try {
-    const [pred, timeline] = await Promise.all([
+    const [pred, timeline, trend] = await Promise.all([
       loadJSON("data/seoul/predictions.json"),
       loadJSON("data/seoul/history_timeline.json").catch(() => []),
+      loadJSON("data/seoul/poll_trend.json").catch(() => null),
     ]);
 
     renderUpdated(pred);
@@ -439,8 +588,9 @@ async function init() {
     renderCandidates(pred);
     renderShyConservative(pred);
     renderMethodNumbers(pred);
+    if (trend) renderGoldenCrossCard(trend);
 
-    TAB_RENDERERS.details   = () => { renderVoteShareChart(pred); renderHistoryChart(timeline); };
+    TAB_RENDERERS.details   = () => { if (trend) renderTrendChart(trend); renderVoteShareChart(pred); renderHistoryChart(timeline); };
     TAB_RENDERERS.scenarios = () => { renderScenarioChart(pred); };
     TAB_RENDERERS.polls     = () => { renderPolls(pred); };
     TAB_RENDERERS.method    = () => {};
