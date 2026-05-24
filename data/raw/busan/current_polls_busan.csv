@@ -74,3 +74,13 @@ poll_date,fieldwork_start,fieldwork_end,pollster,pollster_lean,sample_size,respo
 2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_A,한동훈,무소속,40.8,head-to-head 한동훈 vs 하정우
 2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,42.2,head-to-head 박민식 vs 하정우
 2026-05-20,2026-05-18,2026-05-19,펜앤마이크-여론조사공정,right,500,4.0,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,32.7,head-to-head 박민식 vs 하정우
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,35.0,3-way race
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection,한동훈,무소속,36.0,3-way race
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection,박민식,국민의힘,19.0,3-way race
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.0,head-to-head 한동훈 vs 하정우
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection_2way_A,한동훈,무소속,45.0,head-to-head 한동훈 vs 하정우
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,48.0,head-to-head 박민식 vs 하정우
+2026-05-24,2026-05-21,2026-05-22,세계일보-한국갤럽,center,502,(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,36.0,head-to-head 박민식 vs 하정우
+2026-05-24,2026-05-23,2026-05-23,올리서치-비전코리아,center,533,11.8,2026_buksu_gap_byelection,하정우,더불어민주당,34.5,3-way race (ARS 무선 100%)
+2026-05-24,2026-05-23,2026-05-23,올리서치-비전코리아,center,533,11.8,2026_buksu_gap_byelection,한동훈,무소속,41.5,3-way race (ARS 무선 100%)
+2026-05-24,2026-05-23,2026-05-23,올리서치-비전코리아,center,533,11.8,2026_buksu_gap_byelection,박민식,국민의힘,18.9,3-way race (ARS 무선 100%)
