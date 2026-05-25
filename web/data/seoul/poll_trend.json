@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-05-21",
+  "as_of": "2026-05-26",
   "election": "2026-06-03 서울특별시장 선거",
   "election_date": "2026-06-03",
   "candidates": [
@@ -436,22 +436,62 @@
         "오세훈": 0.3850159956739486
       },
       "n_polls": 20
+    },
+    {
+      "date": "2026-05-22",
+      "support": {
+        "정원오": 0.45420880599210567,
+        "오세훈": 0.3850159956739485
+      },
+      "n_polls": 20
+    },
+    {
+      "date": "2026-05-23",
+      "support": {
+        "정원오": 0.45323129365828857,
+        "오세훈": 0.38482274038577935
+      },
+      "n_polls": 19
+    },
+    {
+      "date": "2026-05-24",
+      "support": {
+        "정원오": 0.4537890158951558,
+        "오세훈": 0.3854009937044997
+      },
+      "n_polls": 18
+    },
+    {
+      "date": "2026-05-25",
+      "support": {
+        "정원오": 0.453789015895156,
+        "오세훈": 0.38540099370449965
+      },
+      "n_polls": 18
+    },
+    {
+      "date": "2026-05-26",
+      "support": {
+        "정원오": 0.45301774081102775,
+        "오세훈": 0.38548739832683143
+      },
+      "n_polls": 17
     }
   ],
   "current_support": {
-    "정원오": 0.4542088059921056,
-    "오세훈": 0.3850159956739486
+    "정원오": 0.45301774081102775,
+    "오세훈": 0.38548739832683143
   },
-  "current_gap_pct": 6.919281031815699,
+  "current_gap_pct": 6.753034248419631,
   "golden_cross": {
     "actual_observed_date": null,
     "extrapolation": {
       "lookback_days_used": 12,
-      "gap_today_pct": 6.919281031815699,
-      "gap_change_pct_per_day": -0.28797617895540645,
+      "gap_today_pct": 6.753034248419631,
+      "gap_change_pct_per_day": -0.5478406544092211,
       "method": "OLS on (date, gap=leader-challenger) for the trailing window",
-      "cross_date_extrapolated": "2026-06-21",
-      "days_from_today": 31,
+      "cross_date_extrapolated": "2026-06-05",
+      "days_from_today": 10,
       "reaches_before_election": false
     }
   }

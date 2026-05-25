@@ -370,10 +370,13 @@ function renderTrendChart(trend) {
   }
 
   const polls = trend.polls || [];
+  // category x축에 없는 라벨(예: 추세 시작 이전인 4월 폴)을 그리면 Chart.js가
+  // 축 맨 끝에 엉뚱한 카테고리로 붙인다. 추세선 라벨 범위 내 폴만 산점도로 표시.
+  const labelSet = new Set(labels);
   const pollScatterByCand = {};
   for (const c of trend.candidates) {
     pollScatterByCand[c] = polls
-      .filter(p => p.support[c] != null)
+      .filter(p => p.support[c] != null && labelSet.has(p.fw_midpoint.slice(5)))
       .map(p => ({ x: p.fw_midpoint.slice(5), y: p.support[c] * 100, pollster: p.pollster }));
   }
 

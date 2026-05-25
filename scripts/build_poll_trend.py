@@ -16,12 +16,15 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-TODAY = date(2026, 5, 21)
+# 예측 스크립트와 동일한 규약: PREDICT_AS_OF(KST) 우선, 없으면 오늘.
+# 하드코딩 금지 — 매일 추세선/골든크로스가 최신 날짜까지 갱신되어야 함.
+TODAY = date.fromisoformat(os.environ.get("PREDICT_AS_OF", date.today().isoformat()))
 START = date(2026, 5, 1)
 ELECTION_DAY = date(2026, 6, 3)
 HALFLIFE_DAYS = 7

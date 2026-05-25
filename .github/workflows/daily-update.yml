@@ -63,6 +63,8 @@ jobs:
         env:
           TZ: Asia/Seoul
         run: |
+          export PREDICT_AS_OF=$(TZ=Asia/Seoul date +%Y-%m-%d)
+          echo "KST date: $PREDICT_AS_OF"
           python scripts/build_poll_trend.py
 
       - name: Commit updated predictions
