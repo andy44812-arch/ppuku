@@ -44,6 +44,12 @@ jobs:
           sudo apt-get install -y -qq fonts-nanum
           rm -rf ~/.cache/matplotlib
 
+      - name: Fetch NESDC pending polls (검토용 알림만 — 자동 추가 X)
+        env:
+          TZ: Asia/Seoul
+        run: |
+          python scripts/fetch_polls.py --days 7 || true
+
       - name: Run prediction (KST date) — 부산 + 서울
         env:
           TZ: Asia/Seoul
@@ -63,7 +69,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/data/ web/plots/ data/processed/busan/ data/processed/seoul/ || true
+          git add web/data/ web/plots/ data/processed/busan/ data/processed/seoul/ data/raw/busan/pending_polls_busan.csv data/raw/seoul/pending_polls_seoul.csv || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 스킵"
           else
