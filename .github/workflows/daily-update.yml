@@ -69,7 +69,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/data/ web/plots/ data/processed/busan/ data/processed/seoul/ data/raw/busan/pending_polls_busan.csv data/raw/seoul/pending_polls_seoul.csv || true
+          git add web/data/ web/plots/ data/processed/busan/ data/processed/seoul/
+          [ -f data/raw/busan/pending_polls_busan.csv ] && git add data/raw/busan/pending_polls_busan.csv || true
+          [ -f data/raw/seoul/pending_polls_seoul.csv ] && git add data/raw/seoul/pending_polls_seoul.csv || true
           if git diff --staged --quiet; then
             echo "변경사항 없음 — 커밋 스킵"
           else
