@@ -210,6 +210,58 @@
         "한동훈": 0.33,
         "박민식": 0.248
       }
+    },
+    {
+      "pollster": "세계일보-한국갤럽",
+      "lean": "center",
+      "fieldwork_start": "2026-05-21",
+      "fieldwork_end": "2026-05-22",
+      "fw_midpoint": "2026-05-21",
+      "n": 502,
+      "support": {
+        "하정우": 0.35,
+        "한동훈": 0.36,
+        "박민식": 0.19
+      }
+    },
+    {
+      "pollster": "여론조사꽃-여론조사꽃",
+      "lean": "left",
+      "fieldwork_start": "2026-05-21",
+      "fieldwork_end": "2026-05-22",
+      "fw_midpoint": "2026-05-21",
+      "n": 500,
+      "support": {
+        "하정우": 0.369,
+        "한동훈": 0.363,
+        "박민식": 0.204
+      }
+    },
+    {
+      "pollster": "올리서치-비전코리아",
+      "lean": "center",
+      "fieldwork_start": "2026-05-23",
+      "fieldwork_end": "2026-05-23",
+      "fw_midpoint": "2026-05-23",
+      "n": 533,
+      "support": {
+        "하정우": 0.345,
+        "한동훈": 0.415,
+        "박민식": 0.18899999999999997
+      }
+    },
+    {
+      "pollster": "부산일보-에이스리서치",
+      "lean": "center",
+      "fieldwork_start": "2026-05-23",
+      "fieldwork_end": "2026-05-24",
+      "fw_midpoint": "2026-05-23",
+      "n": 502,
+      "support": {
+        "하정우": 0.34,
+        "한동훈": 0.382,
+        "박민식": 0.233
+      }
     }
   ],
   "trend": [
@@ -396,28 +448,28 @@
     {
       "date": "2026-05-21",
       "support": {
-        "하정우": 0.3745322791275502,
-        "한동훈": 0.3173135728297952,
-        "박민식": 0.21498234420038154
+        "하정우": 0.37102694054367685,
+        "한동훈": 0.32761044890839575,
+        "박민식": 0.21079010255854683
       },
-      "n_polls": 14
+      "n_polls": 16
     }
   ],
   "current_support": {
-    "하정우": 0.3745322791275502,
-    "한동훈": 0.3173135728297952,
-    "박민식": 0.21498234420038154
+    "하정우": 0.37102694054367685,
+    "한동훈": 0.32761044890839575,
+    "박민식": 0.21079010255854683
   },
-  "current_gap_pct": 5.721870629775499,
+  "current_gap_pct": 4.3416491635281105,
   "golden_cross": {
     "actual_observed_date": null,
     "extrapolation": {
       "lookback_days_used": 12,
-      "gap_today_pct": 5.721870629775499,
-      "gap_change_pct_per_day": -0.41200246453430794,
+      "gap_today_pct": 4.3416491635281105,
+      "gap_change_pct_per_day": -0.46508790554382307,
       "method": "OLS on (date, gap=leader-challenger) for the trailing window",
-      "cross_date_extrapolated": "2026-06-03",
-      "days_from_today": 13,
+      "cross_date_extrapolated": "2026-06-01",
+      "days_from_today": 11,
       "reaches_before_election": true
     }
   }
