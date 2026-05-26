@@ -1,0 +1,3 @@
+poll_date,fieldwork_start,fieldwork_end,pollster,pollster_lean,sample_size,response_rate_pct,election,candidate,party,support_pct,notes
+2026-05-26,2026-05-21,2026-05-25,KBS-한국리서치,centerleft,800,13.9,2026_seoul_mayor,정원오,더불어민주당,,NESDC 16853 | 무선전화면접 | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19078&menuNo=200467
+2026-05-26,2026-05-21,2026-05-25,KBS-한국리서치,centerleft,800,13.9,2026_seoul_mayor,오세훈,국민의힘,,NESDC 16853 | 무선전화면접 | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19078&menuNo=200467
