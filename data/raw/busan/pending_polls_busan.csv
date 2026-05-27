@@ -1,0 +1,10 @@
+poll_date,fieldwork_start,fieldwork_end,pollster,pollster_lean,sample_size,response_rate_pct,election,candidate,party,support_pct,notes
+2026-05-28,2026-05-26,2026-05-27,CBS-케이에스오아이(한국사회여론연구소),centerleft,503,6.4,2026_buksu_gap_byelection,하정우,더불어민주당,,NESDC 17012 | 무선 ARS | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19237&menuNo=200467
+2026-05-28,2026-05-26,2026-05-27,CBS-케이에스오아이(한국사회여론연구소),centerleft,503,6.4,2026_buksu_gap_byelection,한동훈,무소속,,NESDC 17012 | 무선 ARS | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19237&menuNo=200467
+2026-05-28,2026-05-26,2026-05-27,CBS-케이에스오아이(한국사회여론연구소),centerleft,503,6.4,2026_buksu_gap_byelection,박민식,국민의힘,,NESDC 17012 | 무선 ARS | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19237&menuNo=200467
+2026-05-28,2026-05-24,2026-05-26,동아일보-리서치앤리서치,right,504,10.6,2026_buksu_gap_byelection,하정우,더불어민주당,,NESDC 16996 | 무선전화면접 | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19224&menuNo=200467
+2026-05-28,2026-05-24,2026-05-26,동아일보-리서치앤리서치,right,504,10.6,2026_buksu_gap_byelection,한동훈,무소속,,NESDC 16996 | 무선전화면접 | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19224&menuNo=200467
+2026-05-28,2026-05-24,2026-05-26,동아일보-리서치앤리서치,right,504,10.6,2026_buksu_gap_byelection,박민식,국민의힘,,NESDC 16996 | 무선전화면접 | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19224&menuNo=200467
+2026-05-27,2026-05-24,2026-05-25,부산MBC-한길리서치,centerleft,505,10.1,2026_buksu_gap_byelection,하정우,더불어민주당,,NESDC 16870 | 무선 ARS | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19102&menuNo=200467
+2026-05-27,2026-05-24,2026-05-25,부산MBC-한길리서치,centerleft,505,10.1,2026_buksu_gap_byelection,한동훈,무소속,,NESDC 16870 | 무선 ARS | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19102&menuNo=200467
+2026-05-27,2026-05-24,2026-05-25,부산MBC-한길리서치,centerleft,505,10.1,2026_buksu_gap_byelection,박민식,국민의힘,,NESDC 16870 | 무선 ARS | https://www.nesdc.go.kr/portal/bbs/B0000005/view.do?nttId=19102&menuNo=200467
