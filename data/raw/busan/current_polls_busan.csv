@@ -112,3 +112,13 @@ poll_date,fieldwork_start,fieldwork_end,pollster,pollster_lean,sample_size,respo
 2026-05-28,2026-05-25,2026-05-27,JTBC-메타보이스(2차),centerleft,501,19.2,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,40.0,head-to-head 한동훈 vs 하정우
 2026-05-28,2026-05-25,2026-05-27,JTBC-메타보이스(2차),centerleft,501,19.2,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,42.0,head-to-head 박민식 vs 하정우
 2026-05-28,2026-05-25,2026-05-27,JTBC-메타보이스(2차),centerleft,501,19.2,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,37.0,head-to-head 박민식 vs 하정우
+2026-05-28,2026-05-24,2026-05-27,KBS-한국리서치,centerleft,500,26.5,2026_buksu_gap_byelection,한동훈,무소속,39.0,3-way race (NESDC 17009)
+2026-05-28,2026-05-24,2026-05-27,KBS-한국리서치,centerleft,500,26.5,2026_buksu_gap_byelection,하정우,더불어민주당,33.0,3-way race (NESDC 17009)
+2026-05-28,2026-05-24,2026-05-27,KBS-한국리서치,centerleft,500,26.5,2026_buksu_gap_byelection,박민식,국민의힘,15.0,3-way race (NESDC 17009)
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection,한동훈,무소속,39.1,3-way race (ARS, NESDC 17038)
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection,하정우,더불어민주당,37.5,3-way race (ARS, NESDC 17038)
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection,박민식,국민의힘,17.5,3-way race (ARS, NESDC 17038)
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection_2way_A,한동훈,무소속,43.6,head-to-head 한동훈 vs 하정우
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.7,head-to-head 한동훈 vs 하정우
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,42.8,head-to-head 박민식 vs 하정우
+2026-05-29,2026-05-26,2026-05-27,(주)여론조사꽃-여론조사꽃,left,502,9.5,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,27.0,head-to-head 박민식 vs 하정우
