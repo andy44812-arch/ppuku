@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-05-31",
+  "as_of": "2026-06-01",
   "election": "2026-06-03 부산 북구갑 보궐선거",
   "election_date": "2026-06-03",
   "candidates": [
@@ -621,23 +621,32 @@
         "박민식": 0.19173951414869336
       },
       "n_polls": 19
+    },
+    {
+      "date": "2026-06-01",
+      "support": {
+        "하정우": 0.358145562454338,
+        "한동훈": 0.37699535416861707,
+        "박민식": 0.1917395141486934
+      },
+      "n_polls": 19
     }
   ],
   "current_support": {
-    "하정우": 0.3581455624543378,
-    "한동훈": 0.37699535416861696,
-    "박민식": 0.19173951414869336
+    "하정우": 0.358145562454338,
+    "한동훈": 0.37699535416861707,
+    "박민식": 0.1917395141486934
   },
-  "current_gap_pct": -1.884979171427914,
+  "current_gap_pct": -1.8849791714279085,
   "golden_cross": {
     "actual_observed_date": "2026-05-26",
     "extrapolation": {
       "lookback_days_used": 12,
-      "gap_today_pct": -1.884979171427914,
-      "gap_change_pct_per_day": -0.7200580446288556,
+      "gap_today_pct": -1.8849791714279085,
+      "gap_change_pct_per_day": -0.5976370091226941,
       "method": "OLS on (date, gap=leader-challenger) for the trailing window",
       "cross_date_extrapolated": "2026-05-27",
-      "days_from_today": -4,
+      "days_from_today": -5,
       "reaches_before_election": true
     }
   }
