@@ -59,3 +59,10 @@ poll_date,pollster,sample_size,response_rate_pct,election,candidate,party,suppor
 2026-05-24,부산일보-에이스리서치,502,10.2,2026_buksu_gap_byelection,하정우,더불어민주당,34.0,무선 ARS 100%
 2026-05-24,부산일보-에이스리서치,502,10.2,2026_buksu_gap_byelection,한동훈,무소속,38.2,무선 ARS 100%
 2026-05-24,부산일보-에이스리서치,502,10.2,2026_buksu_gap_byelection,박민식,국민의힘,23.3,무선 ARS 100%
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection,하정우,더불어민주당,37.0,
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection,한동훈,무소속,25.0,
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection,박민식,국민의힘,26.0,
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,42.0,
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_A,한동훈,무소속,36.0,
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.0,
+2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,39.0,
