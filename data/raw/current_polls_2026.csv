@@ -88,3 +88,6 @@ poll_date,pollster,sample_size,response_rate_pct,election,candidate,party,suppor
 2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_A,한동훈,무소속,36.0,
 2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.0,
 2026-05-05,JTBC-메타보이스(주),501,15.1,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,39.0,
+2026-05-27,KBS-한국리서치,500,26.5,2026_buksu_gap_byelection,하정우,더불어민주당,33.0,무선 전화면접 100%
+2026-05-27,KBS-한국리서치,500,26.5,2026_buksu_gap_byelection,한동훈,무소속,39.0,무선 전화면접 100%
+2026-05-27,KBS-한국리서치,500,26.5,2026_buksu_gap_byelection,박민식,국민의힘,15.0,무선 전화면접 100%
