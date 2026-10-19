@@ -91,3 +91,19 @@ poll_date,pollster,sample_size,response_rate_pct,election,candidate,party,suppor
 2026-05-27,KBS-한국리서치,500,26.5,2026_buksu_gap_byelection,하정우,더불어민주당,33.0,무선 전화면접 100%
 2026-05-27,KBS-한국리서치,500,26.5,2026_buksu_gap_byelection,한동훈,무소속,39.0,무선 전화면접 100%
 2026-05-27,KBS-한국리서치,500,26.5,2026_buksu_gap_byelection,박민식,국민의힘,15.0,무선 전화면접 100%
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,39.0,
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,한동훈,무소속,33.0,
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection,박민식,국민의힘,20.0,
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,41.0,
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_A,한동훈,무소속,39.0,
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,44.0,
+2026-05-17,조선일보-메트릭스,501,(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,30.0,
+2026-05-19,채널A-리서치앤리서치,500,10.0,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,37.6,무선전화면접
+2026-05-19,채널A-리서치앤리서치,500,10.0,2026_buksu_gap_byelection_2way_A,한동훈,무소속,44.1,무선전화면접
+2026-05-19,채널A-리서치앤리서치,500,10.0,2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,42.6,무선전화면접
+2026-05-19,채널A-리서치앤리서치,500,10.0,2026_buksu_gap_byelection_2way_B,박민식,국민의힘,32.4,무선전화면접
+2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection,하정우,더불어민주당,35.8,무선 ARS 100%
+2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection,한동훈,무소속,40.7,무선 ARS 100%
+2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection,박민식,국민의힘,17.9,무선 ARS 100%
+2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,36.4,무선 ARS 100%
+2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection_2way_A,한동훈,무소속,46.7,무선 ARS 100%
