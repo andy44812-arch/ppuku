@@ -107,3 +107,15 @@ poll_date,pollster,sample_size,response_rate_pct,election,candidate,party,suppor
 2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection,박민식,국민의힘,17.9,무선 ARS 100%
 2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,36.4,무선 ARS 100%
 2026-05-27,CBS-KSOI,503,6.4,2026_buksu_gap_byelection_2way_A,한동훈,무소속,46.7,무선 ARS 100%
+2026-05-19,중앙일보-케이스탯리서치,505,13.1,2026_buksu_gap_byelection,하정우,더불어민주당,35.0,무선 전화면접 100%
+2026-05-19,중앙일보-케이스탯리서치,505,13.1,2026_buksu_gap_byelection,한동훈,무소속,31.0,무선 전화면접 100%
+2026-05-19,중앙일보-케이스탯리서치,505,13.1,2026_buksu_gap_byelection,박민식,국민의힘,20.0,무선 전화면접 100%
+2026-05-19,중앙일보-케이스탯리서치,505,13.1,2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,38.0,무선 전화면접 100%
+2026-05-19,중앙일보-케이스탯리서치,505,13.1,2026_buksu_gap_byelection_2way_A,한동훈,무소속,38.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection,하정우,더불어민주당,35.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection,한동훈,무소속,39.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection,박민식,국민의힘,18.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection_2way_A,하정우,더불어민주당,39.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection_2way_A,한동훈,무소속,45.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection_2way_B,하정우,더불어민주당,41.0,무선 전화면접 100%
+2026-05-27,중앙일보-케이스탯리서치,(unknown),(unknown),2026_buksu_gap_byelection_2way_B,박민식,국민의힘,34.0,무선 전화면접 100%
